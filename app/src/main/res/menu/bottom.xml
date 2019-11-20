@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/myfavorite"
+        android:icon="@drawable/ic_favorite_black_24dp"
+        android:title="Nhạc yêu thích" />
+
+    <item
+        android:id="@+id/discover"
+        android:icon="@drawable/ic_whatshot_black_24dp"
+        android:title="Khám phá" />
+
+    <item
+        android:id="@+id/razochart"
+        android:icon="@drawable/ic_assessment_black_24dp"
+        android:title="#Razochart" />
+
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="Tìm kiếm" />
+
+</menu>

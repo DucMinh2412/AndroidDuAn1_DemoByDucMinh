@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black3">
+
+        <ImageView
+            android:id="@+id/ImgAnhcasi"
+            android:layout_width="80dp"
+            android:layout_height="60dp"
+            android:src="@drawable/huongly" />
+
+        <TextView
+            android:id="@+id/tvTenBaiHatTop10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@id/ImgAnhcasi"
+            android:text="Yêu ai để không phải khóc"
+            android:textColor="@color/white"
+            android:textSize="13dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvTencasiTop10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTenBaiHatTop10"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@id/ImgAnhcasi"
+            android:text="Hương ly"
+            android:textColor="@color/white"
+            android:textSize="13dp" />
+
+        <ImageView
+            android:id="@+id/ImgFavorite"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="12dp"
+            android:src="@drawable/ic_favorite_black_24dp" />
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>
