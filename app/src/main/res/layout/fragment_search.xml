@@ -20,7 +20,6 @@
         android:background="@drawable/search"
         android:iconifiedByDefault="false"
         android:queryHint="Yêu ai để không phải khóc"
-
         />
 
     <androidx.recyclerview.widget.RecyclerView
