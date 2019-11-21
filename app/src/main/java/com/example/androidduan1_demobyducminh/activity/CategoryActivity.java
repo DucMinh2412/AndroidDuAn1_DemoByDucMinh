@@ -28,7 +28,7 @@ public class CategoryActivity extends AppCompatActivity {
 
         rclCategory.setHasFixedSize(true);
         for (int i = 0; i < 9; i++) {
-            categoryList.add(new Category("Bolero", ""));
+            categoryList.add(new Category("Tuyển tập bolero 2019", ""));
         }
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
         gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
