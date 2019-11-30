@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,15 +19,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.androidduan1_demobyducminh.R;
 import com.example.androidduan1_demobyducminh.activity.ExchangePassActivity;
 import com.example.androidduan1_demobyducminh.activity.LoginActivity;
-import com.example.androidduan1_demobyducminh.adapter.MyfavoriteAdapter;
-import com.example.androidduan1_demobyducminh.model.Song;
+import com.example.androidduan1_demobyducminh.adapter.RazochartAdapter;
+import com.example.androidduan1_demobyducminh.dao.SongDAO;
+import com.example.androidduan1_demobyducminh.model.Top10Razochart;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SearchFragment extends Fragment {
-    List<Song> songList = new ArrayList<>();
-    MyfavoriteAdapter myfavoriteAdapter;
+    List<Top10Razochart> top10RazochartList = new ArrayList<>();
+    RazochartAdapter razochartAdapter;
+    RecyclerView recyclerView;
+    SongDAO songDAO;
 
 
     @Nullable
@@ -34,13 +38,25 @@ public class SearchFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         final ImageView imageExit = view.findViewById(R.id.ImgExitSearch);
-        RecyclerView recyclerView = view.findViewById(R.id.rclRecycleviewSearch);
-        recyclerView.setHasFixedSize(true);
+        recyclerView = view.findViewById(R.id.rclRecycleviewSearch);
+        final SearchView searchView = view.findViewById(R.id.svSearch);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
 
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        myfavoriteAdapter = new MyfavoriteAdapter(getContext(), songList, recyclerView);
-        recyclerView.setAdapter(myfavoriteAdapter);
+            @Override
+            public boolean onQueryTextChange(String s) {
+                songDAO = new SongDAO(getContext());
+                top10RazochartList = songDAO.searchWord(s);
+                recyclerView.setHasFixedSize(true);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                razochartAdapter = new RazochartAdapter(getContext(), top10RazochartList, recyclerView);
+                recyclerView.setAdapter(razochartAdapter);
+                return true;
+            }
+        });
 
 
         // popupmenu

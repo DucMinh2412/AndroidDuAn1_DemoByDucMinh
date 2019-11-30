@@ -11,12 +11,13 @@ import com.example.androidduan1_demobyducminh.R;
 
 public class RazoChartHolder extends RecyclerView.ViewHolder {
     public TextView TenBaiHatTop10, TenCaSiTop10;
-    public ImageView ImgAnhCaSi;
+    public ImageView ImgAnhCaSi, ImgMyfavorite;
 
     public RazoChartHolder(@NonNull View itemView) {
         super(itemView);
         TenBaiHatTop10 = itemView.findViewById(R.id.tvTenBaiHatTop10);
         TenCaSiTop10 = itemView.findViewById(R.id.tvTencasiTop10);
         ImgAnhCaSi = itemView.findViewById(R.id.ImgAnhcasiRazo);
+        ImgMyfavorite = itemView.findViewById(R.id.ImgFavorite);
     }
 }

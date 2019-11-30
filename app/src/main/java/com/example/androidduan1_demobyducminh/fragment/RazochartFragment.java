@@ -41,12 +41,12 @@ public class RazochartFragment extends Fragment {
         final ImageView imageExit = view.findViewById(R.id.ImgExitRazochart);
         RecyclerView recyclerView = view.findViewById(R.id.rclRecycleviewrazochart);
         songDAO = new SongDAO(getContext());
+        Add();
         top10RazochartList = songDAO.showTop10();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         razochartAdapter = new RazochartAdapter(getContext(), top10RazochartList, recyclerView);
         recyclerView.setAdapter(razochartAdapter);
-
         Button PlayAllRazoChart = view.findViewById(R.id.PlayAllRazoChart);
         PlayAllRazoChart.setOnClickListener(new View.OnClickListener() {
             @Override

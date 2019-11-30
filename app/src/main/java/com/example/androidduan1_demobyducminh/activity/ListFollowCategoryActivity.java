@@ -5,19 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidduan1_demobyducminh.R;
-import com.example.androidduan1_demobyducminh.adapter.MyfavoriteAdapter;
-import com.example.androidduan1_demobyducminh.model.Song;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ListFollowCategoryActivity extends AppCompatActivity {
-    List<Song> songList = new ArrayList<>();
-    MyfavoriteAdapter myfavoriteAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,9 +19,6 @@ public class ListFollowCategoryActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.rclListFolowCategory);
         recyclerView.setHasFixedSize(true);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        myfavoriteAdapter = new MyfavoriteAdapter(this, songList, recyclerView);
-        recyclerView.setAdapter(myfavoriteAdapter);
 
     }
 

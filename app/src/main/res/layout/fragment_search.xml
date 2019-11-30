@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_chevron_left_black_24dp" />
 
+
     <SearchView
         android:id="@+id/svSearch"
         android:layout_width="match_parent"
@@ -21,6 +22,7 @@
         android:iconifiedByDefault="false"
         android:queryHint="Yêu ai để không phải khóc"
         />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rclRecycleviewSearch"

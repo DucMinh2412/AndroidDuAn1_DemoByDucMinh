@@ -15,33 +15,30 @@ import com.blogspot.atifsoftwares.animatoolib.Animatoo;
 import com.example.androidduan1_demobyducminh.R;
 import com.example.androidduan1_demobyducminh.dao.SongDAO;
 import com.example.androidduan1_demobyducminh.model.Top10Razochart;
-import com.example.androidduan1_demobyducminh.presenter.PlaymusicPresenter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.util.Random;
 
 public class PlayMusicActivity extends AppCompatActivity {
     public TextView tvStart, tvEnd, tvNameSingle, tvNameSong;
     public static int onTimeOnly = 0;
     public SeekBar seekBar;
     public MediaPlayer mediaPlayer;
-    public double starttime = 0;
-    public double finaltime = 0;
     public ImageView ImgRamDom, ImgNext, ImgPre, ImgPause_Play, ImgRepeat, ImgPLAnhcasi;
     public Handler myHandler = new Handler();
     public int position = 0;
     List<Top10Razochart> razochartList = new ArrayList<>();
     SongDAO songDAO;
-    PlaymusicPresenter playmusicPresenter;
+    boolean repeat = false;
+    boolean checkramdom = false;
     private Runnable UpdateSongTime = new Runnable() {
         @Override
         public void run() {
-            starttime = mediaPlayer.getCurrentPosition();
-            tvStart.setText(String.format("%d : %d", TimeUnit.MILLISECONDS.toMinutes((long) starttime),
-                    TimeUnit.MILLISECONDS.toSeconds((long) starttime) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long) starttime))
-            ));
-            seekBar.setProgress((int) starttime);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
+            tvStart.setText(simpleDateFormat.format(mediaPlayer.getCurrentPosition()));
+            seekBar.setProgress(mediaPlayer.getCurrentPosition());
             myHandler.postDelayed(this, 100);
         }
     };
@@ -64,27 +61,25 @@ public class PlayMusicActivity extends AppCompatActivity {
         mediaPlayer = MediaPlayer.create(PlayMusicActivity.this, LinkBaiHat);
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
+            mediaPlayer.release();
+        } else {
+            mediaPlayer.start();
         }
-        mediaPlayer.start();
         setTime();
+        OnSeeBar();
     }
 
     public void setTime() {
-        finaltime = mediaPlayer.getDuration();
-        starttime = mediaPlayer.getCurrentPosition();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
         if (onTimeOnly == 0) {
-            seekBar.setMax((int) finaltime);
+            seekBar.setMax(mediaPlayer.getDuration());
         }
 
-        tvEnd.setText(String.format("%d : %d", TimeUnit.MILLISECONDS.toMinutes((long) finaltime),
-                TimeUnit.MILLISECONDS.toSeconds((long) finaltime) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long) finaltime))
-        ));
+        tvEnd.setText(simpleDateFormat.format(mediaPlayer.getDuration()));
 
-        tvStart.setText(String.format("%d : %d", TimeUnit.MILLISECONDS.toMinutes((long) starttime),
-                TimeUnit.MILLISECONDS.toSeconds((long) starttime) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes((long) starttime))
-        ));
+        tvStart.setText(simpleDateFormat.format(mediaPlayer.getCurrentPosition()));
 
-        seekBar.setProgress((int) starttime);
+        seekBar.setProgress(mediaPlayer.getCurrentPosition());
         myHandler.postDelayed(UpdateSongTime, 100);
 
     }
@@ -99,7 +94,6 @@ public class PlayMusicActivity extends AppCompatActivity {
         }
     }
 
-
     public void ImgPre(View view) {
         position--;
         if (position < 0) {
@@ -107,9 +101,26 @@ public class PlayMusicActivity extends AppCompatActivity {
         }
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
+            mediaPlayer.release();
         }
+
+        if (repeat == true) {
+            position = position - 1;
+
+        }
+
+        if (checkramdom == true) {
+            Random random = new Random();
+            int index = random.nextInt(razochartList.size());
+            if (index == position) {
+                position = index - 1;
+            }
+            position = index;
+        }
+
         CreateMediaPlayer();
         mediaPlayer.start();
+        ImgPause_Play.setImageResource(R.drawable.play);
     }
 
     public void ImgNext(View view) {
@@ -119,9 +130,78 @@ public class PlayMusicActivity extends AppCompatActivity {
         }
         if (mediaPlayer.isPlaying()) {
             mediaPlayer.stop();
+            mediaPlayer.release();
         }
+
+        if (repeat == true) {
+            position = position - 1;
+
+        }
+
+        if (checkramdom == true) {
+            Random random = new Random();
+            int index = random.nextInt(razochartList.size());
+            if (index == position) {
+                position = index - 1;
+            }
+            position = index;
+        }
+
         CreateMediaPlayer();
         mediaPlayer.start();
+        ImgPause_Play.setImageResource(R.drawable.play);
+    }
+
+    public void ImgRamDom(View view) {
+        if (checkramdom == false) {
+            if (repeat == true) {
+                repeat = false;
+                ImgRamDom.setImageResource(R.drawable.arrows);
+                ImgRepeat.setImageResource(R.drawable.repeat);
+            }
+            ImgRamDom.setImageResource(R.drawable.ff);
+            checkramdom = true;
+        } else {
+            ImgRamDom.setImageResource(R.drawable.arrows);
+            checkramdom = false;
+        }
+    }
+
+
+    public void Imgrepeat(View view) {
+        if (repeat == false) {
+            if (checkramdom == true) {
+                checkramdom = false;
+                ImgRepeat.setImageResource(R.drawable.repeat);
+                ImgRamDom.setImageResource(R.drawable.ff);
+            }
+            ImgRepeat.setImageResource(R.drawable.repeat);
+            repeat = true;
+        } else {
+            ImgRepeat.setImageResource(R.drawable.repeatone);
+            repeat = false;
+        }
+
+
+    }
+
+    public void OnSeeBar() {
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                mediaPlayer.seekTo(seekBar.getProgress());
+            }
+        });
     }
 
     public void CreateMediaPlayer() {
@@ -131,13 +211,6 @@ public class PlayMusicActivity extends AppCompatActivity {
         ImgPLAnhcasi.setImageResource(razochartList.get(position).getLinkAnhBaiHat());
     }
 
-
-
-    public void ImgHuongLy(View view) {
-        Intent intent = new Intent(this, ListPlayMusicActivity.class);
-        startActivity(intent);
-        finish();
-    }
 
     public void ImgExitPlayMusic(View view) {
         finish();

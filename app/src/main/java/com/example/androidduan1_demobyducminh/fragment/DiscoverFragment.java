@@ -22,8 +22,8 @@ import com.example.androidduan1_demobyducminh.activity.LoginActivity;
 import com.example.androidduan1_demobyducminh.adapter.MyfavoriteAdapter;
 import com.example.androidduan1_demobyducminh.adapter.PlayListAdapter;
 import com.example.androidduan1_demobyducminh.adapter.ThemeAdapter;
+import com.example.androidduan1_demobyducminh.model.Favorite;
 import com.example.androidduan1_demobyducminh.model.Playlist;
-import com.example.androidduan1_demobyducminh.model.Song;
 import com.example.androidduan1_demobyducminh.model.Theme;
 
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class DiscoverFragment extends Fragment {
     MyfavoriteAdapter myfavoriteAdapter;
     ThemeAdapter themeAdapter;
 
-    List<Song> songList = new ArrayList<>();
+    List<Favorite> favoriteList = new ArrayList<>();
     List<Playlist> playlists = new ArrayList<>();
     List<Theme> themeList = new ArrayList<>();
 
@@ -71,7 +71,7 @@ public class DiscoverFragment extends Fragment {
         rclIfyouwant.setHasFixedSize(true);
 
         rclIfyouwant.setLayoutManager(new LinearLayoutManager(getContext()));
-        myfavoriteAdapter = new MyfavoriteAdapter(getContext(), songList, rclIfyouwant);
+        myfavoriteAdapter = new MyfavoriteAdapter(getContext(), favoriteList, rclIfyouwant);
         rclIfyouwant.setAdapter(myfavoriteAdapter);
 
         // popupmenu

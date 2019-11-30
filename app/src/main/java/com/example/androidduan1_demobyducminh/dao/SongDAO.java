@@ -106,4 +106,35 @@ public class SongDAO {
         return list;
     }
 
+    public List<Top10Razochart> searchWord(String text) {
+        List<Top10Razochart> words = new ArrayList<>();
+
+        SQLiteDatabase sqLiteDatabase = songOpenHelper.getWritableDatabase();
+
+        String SQL = "SELECT * FROM " + TABLE_NAME_BAIHAT + " WHERE " + tc_TENBAIHAT + " LIKE '%" + text + " %'";
+
+        Cursor cursor = sqLiteDatabase.rawQuery(SQL, null);
+
+        if (cursor != null) {
+            if (cursor.getCount() > 0) {
+
+                cursor.moveToFirst();
+                while (!cursor.isAfterLast()) {
+                    Top10Razochart top10Razochart = new Top10Razochart();
+                    top10Razochart.setIDBaiHat(cursor.getInt(cursor.getColumnIndex(tc_IDBAIHAT)));
+                    top10Razochart.setTenBaiHat(cursor.getString(cursor.getColumnIndex(tc_TENBAIHAT)));
+                    top10Razochart.setTenCasi(cursor.getString(cursor.getColumnIndex(tc_TENCASI)));
+                    top10Razochart.setLinkAnhBaiHat(cursor.getInt(cursor.getColumnIndex(tc_LINKANHBAIHAT)));
+                    top10Razochart.setLinkBaiHat(cursor.getInt(cursor.getColumnIndex(tc_LINKBAIHAT)));
+                    top10Razochart.setSoluotNghe(cursor.getInt(cursor.getColumnIndex(tc_SOLUOTNGHE)));
+                    cursor.moveToNext();
+
+                }
+                cursor.close();
+            }
+        }
+
+        return words;
+    }
+
 }

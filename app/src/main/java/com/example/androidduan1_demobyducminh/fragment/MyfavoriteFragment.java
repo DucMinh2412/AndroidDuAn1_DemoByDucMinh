@@ -21,17 +21,17 @@ import com.example.androidduan1_demobyducminh.activity.ExchangePassActivity;
 import com.example.androidduan1_demobyducminh.activity.LoginActivity;
 import com.example.androidduan1_demobyducminh.activity.PlayMusicActivity;
 import com.example.androidduan1_demobyducminh.adapter.MyfavoriteAdapter;
-import com.example.androidduan1_demobyducminh.dao.SongDAO;
-import com.example.androidduan1_demobyducminh.model.Song;
+import com.example.androidduan1_demobyducminh.dao.MyFavoriteDAO;
+import com.example.androidduan1_demobyducminh.model.Favorite;
 import com.facebook.login.LoginManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MyfavoriteFragment extends Fragment {
-    List<Song> songList = new ArrayList<>();
+    List<Favorite> favoriteList = new ArrayList<>();
     MyfavoriteAdapter myfavoriteAdapter;
-    SongDAO songDAO;
+    MyFavoriteDAO myFavoriteDAO;
 
     @Nullable
     @Override
@@ -40,10 +40,10 @@ public class MyfavoriteFragment extends Fragment {
         final ImageView imageExit = view.findViewById(R.id.ImgExitMyFavorite);
         RecyclerView recyclerView = view.findViewById(R.id.rclRecycleviewMyfavorite);
         recyclerView.setHasFixedSize(true);
-
-
+        myFavoriteDAO = new MyFavoriteDAO(getContext());
+        favoriteList = myFavoriteDAO.ALLSONGFAVORITE();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        myfavoriteAdapter = new MyfavoriteAdapter(getContext(), songList, recyclerView);
+        myfavoriteAdapter = new MyfavoriteAdapter(getContext(), favoriteList, recyclerView);
         recyclerView.setAdapter(myfavoriteAdapter);
 
         Button PlayAllFavorite = view.findViewById(R.id.PlayAllFavorite);

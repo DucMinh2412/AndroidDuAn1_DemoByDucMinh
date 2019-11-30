@@ -14,7 +14,6 @@
         <activity android:name=".activity.ListFollowCategoryActivity"></activity>
         <activity android:name=".activity.CategoryActivity" />
         <activity android:name=".activity.PlaylistActivity" />
-        <activity android:name=".activity.ListPlayMusicActivity" />
         <activity android:name=".activity.PlayMusicActivity" />
         <activity android:name=".activity.ExchangePassActivity" />
         <activity android:name=".activity.MainActivity" />

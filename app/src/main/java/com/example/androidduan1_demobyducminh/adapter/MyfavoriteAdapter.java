@@ -12,19 +12,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.androidduan1_demobyducminh.R;
 import com.example.androidduan1_demobyducminh.activity.PlayMusicActivity;
 import com.example.androidduan1_demobyducminh.holder.MyfavoriteHolder;
-import com.example.androidduan1_demobyducminh.model.Song;
+import com.example.androidduan1_demobyducminh.model.Favorite;
 
 import java.util.List;
 
 public class MyfavoriteAdapter extends RecyclerView.Adapter<MyfavoriteHolder> {
 
     public Context context;
-    public List<Song> songList;
+    public List<Favorite> favoriteList;
     public RecyclerView recyclerView;
 
-    public MyfavoriteAdapter(Context context, List<Song> songList, RecyclerView recyclerView) {
+    public MyfavoriteAdapter(Context context, List<Favorite> favoriteList, RecyclerView recyclerView) {
         this.context = context;
-        this.songList = songList;
+        this.favoriteList = favoriteList;
         this.recyclerView = recyclerView;
     }
 
@@ -42,9 +42,10 @@ public class MyfavoriteAdapter extends RecyclerView.Adapter<MyfavoriteHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MyfavoriteHolder holder, final int position) {
-        Song song = songList.get(position);
-        holder.tvTenbaihatYT.setText(song.getTenBaiHat());
-        holder.tvTencasiYT.setText(song.getTenCasi());
+        Favorite favorite = favoriteList.get(position);
+        holder.tvTenbaihatYT.setText(favorite.getTenBaiHat());
+        holder.tvTencasiYT.setText(favorite.getTenCasi());
+        holder.ImgAnhcasi.setImageResource(favorite.getLinkAnhBaiHat());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +59,6 @@ public class MyfavoriteAdapter extends RecyclerView.Adapter<MyfavoriteHolder> {
 
     @Override
     public int getItemCount() {
-        return songList.size();
+        return favoriteList.size();
     }
 }
