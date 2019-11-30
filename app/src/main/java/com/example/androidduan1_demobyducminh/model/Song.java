@@ -2,16 +2,17 @@ package com.example.androidduan1_demobyducminh.model;
 
 public class Song {
     public int IDBaiHat, IDTheLoai, IDPlaylist;
-    public String TenCasi, LinkAnhCaSi, TenBaiHat, LinkBaiHat;
+    public String TenBaiHat, TenCasi;
+    public int LinkAnhBaiHat, LinkBaiHat;
     public double SoluotNghe;
 
     public Song() {
     }
 
-    public Song(String tenCasi, String linkAnhCaSi, String tenBaiHat, String linkBaiHat, double soluotNghe) {
-        TenCasi = tenCasi;
-        LinkAnhCaSi = linkAnhCaSi;
+    public Song(String tenBaiHat, String tenCasi, int linkAnhBaiHat, int linkBaiHat, double soluotNghe) {
         TenBaiHat = tenBaiHat;
+        TenCasi = tenCasi;
+        LinkAnhBaiHat = linkAnhBaiHat;
         LinkBaiHat = linkBaiHat;
         SoluotNghe = soluotNghe;
     }
@@ -40,22 +41,6 @@ public class Song {
         this.IDPlaylist = IDPlaylist;
     }
 
-    public String getTenCasi() {
-        return TenCasi;
-    }
-
-    public void setTenCasi(String tenCasi) {
-        TenCasi = tenCasi;
-    }
-
-    public String getLinkAnhCaSi() {
-        return LinkAnhCaSi;
-    }
-
-    public void setLinkAnhCaSi(String linkAnhCaSi) {
-        LinkAnhCaSi = linkAnhCaSi;
-    }
-
     public String getTenBaiHat() {
         return TenBaiHat;
     }
@@ -64,11 +49,27 @@ public class Song {
         TenBaiHat = tenBaiHat;
     }
 
-    public String getLinkBaiHat() {
+    public String getTenCasi() {
+        return TenCasi;
+    }
+
+    public void setTenCasi(String tenCasi) {
+        TenCasi = tenCasi;
+    }
+
+    public int getLinkAnhBaiHat() {
+        return LinkAnhBaiHat;
+    }
+
+    public void setLinkAnhBaiHat(int linkAnhBaiHat) {
+        LinkAnhBaiHat = linkAnhBaiHat;
+    }
+
+    public int getLinkBaiHat() {
         return LinkBaiHat;
     }
 
-    public void setLinkBaiHat(String linkBaiHat) {
+    public void setLinkBaiHat(int linkBaiHat) {
         LinkBaiHat = linkBaiHat;
     }
 

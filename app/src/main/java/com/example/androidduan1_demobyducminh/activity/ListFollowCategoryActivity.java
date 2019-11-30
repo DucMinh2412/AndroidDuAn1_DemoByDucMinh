@@ -26,9 +26,6 @@ public class ListFollowCategoryActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.rclListFolowCategory);
         recyclerView.setHasFixedSize(true);
-        for (int i = 0; i < 10; i++) {
-            songList.add(new Song("Yêu ai để không phải khóc", "", "Hương Ly", "", 29));
-        }
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         myfavoriteAdapter = new MyfavoriteAdapter(this, songList, recyclerView);

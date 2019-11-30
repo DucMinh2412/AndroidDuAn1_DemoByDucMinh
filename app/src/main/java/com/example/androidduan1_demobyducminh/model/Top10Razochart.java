@@ -2,16 +2,17 @@ package com.example.androidduan1_demobyducminh.model;
 
 public class Top10Razochart {
     public int IDBaiHat;
-    public String TenCasi, LinkAnhCaSi, TenBaiHat, LinkBaiHat;
+    public String TenCasi, TenBaiHat;
+    public int LinkAnhBaiHat, LinkBaiHat;
     public double SoluotNghe;
 
     public Top10Razochart() {
     }
 
-    public Top10Razochart(String tenCasi, String linkAnhCaSi, String tenBaiHat, String linkBaiHat, double soluotNghe) {
+    public Top10Razochart(String tenCasi, String tenBaiHat, int linkAnhBaiHat, int linkBaiHat, double soluotNghe) {
         TenCasi = tenCasi;
-        LinkAnhCaSi = linkAnhCaSi;
         TenBaiHat = tenBaiHat;
+        LinkAnhBaiHat = linkAnhBaiHat;
         LinkBaiHat = linkBaiHat;
         SoluotNghe = soluotNghe;
     }
@@ -32,14 +33,6 @@ public class Top10Razochart {
         TenCasi = tenCasi;
     }
 
-    public String getLinkAnhCaSi() {
-        return LinkAnhCaSi;
-    }
-
-    public void setLinkAnhCaSi(String linkAnhCaSi) {
-        LinkAnhCaSi = linkAnhCaSi;
-    }
-
     public String getTenBaiHat() {
         return TenBaiHat;
     }
@@ -48,11 +41,19 @@ public class Top10Razochart {
         TenBaiHat = tenBaiHat;
     }
 
-    public String getLinkBaiHat() {
+    public int getLinkAnhBaiHat() {
+        return LinkAnhBaiHat;
+    }
+
+    public void setLinkAnhBaiHat(int linkAnhBaiHat) {
+        LinkAnhBaiHat = linkAnhBaiHat;
+    }
+
+    public int getLinkBaiHat() {
         return LinkBaiHat;
     }
 
-    public void setLinkBaiHat(String linkBaiHat) {
+    public void setLinkBaiHat(int linkBaiHat) {
         LinkBaiHat = linkBaiHat;
     }
 

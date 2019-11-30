@@ -21,7 +21,9 @@ import com.example.androidduan1_demobyducminh.activity.ExchangePassActivity;
 import com.example.androidduan1_demobyducminh.activity.LoginActivity;
 import com.example.androidduan1_demobyducminh.activity.PlayMusicActivity;
 import com.example.androidduan1_demobyducminh.adapter.MyfavoriteAdapter;
+import com.example.androidduan1_demobyducminh.dao.SongDAO;
 import com.example.androidduan1_demobyducminh.model.Song;
+import com.facebook.login.LoginManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +31,7 @@ import java.util.List;
 public class MyfavoriteFragment extends Fragment {
     List<Song> songList = new ArrayList<>();
     MyfavoriteAdapter myfavoriteAdapter;
-
+    SongDAO songDAO;
 
     @Nullable
     @Override
@@ -39,9 +41,6 @@ public class MyfavoriteFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.rclRecycleviewMyfavorite);
         recyclerView.setHasFixedSize(true);
 
-        for (int i = 0; i < 3; i++) {
-            songList.add(new Song("Yêu ai để không phải khóc", "", "Hương Ly", "", 29));
-        }
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         myfavoriteAdapter = new MyfavoriteAdapter(getContext(), songList, recyclerView);
@@ -68,6 +67,7 @@ public class MyfavoriteFragment extends Fragment {
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         switch (menuItem.getItemId()) {
                             case R.id.dangxuat:
+                                LoginManager.getInstance().logOut();
                                 Intent intent = new Intent(getContext(), LoginActivity.class);
                                 startActivity(intent);
                                 break;

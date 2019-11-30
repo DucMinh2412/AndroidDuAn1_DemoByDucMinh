@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/pink"
             android:hint="Mật khẩu"
-            android:inputType="textPassword" />
+            android:inputType="number" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -64,7 +64,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/pink"
             android:hint="Nhập lại mật khẩu"
-            android:inputType="textPassword" />
+            android:inputType="number" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/pink"
             android:hint="Số điện thoại"
-            android:inputType="phone" />
+            android:inputType="number" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

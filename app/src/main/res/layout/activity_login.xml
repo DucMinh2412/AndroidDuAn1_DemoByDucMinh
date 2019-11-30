@@ -72,15 +72,34 @@
 
     </LinearLayout>
 
-
-    <Button
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/boder"
-        android:onClick="DangNhap"
-        android:text="Đăng nhập"
-        android:textColor="@color/pink" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/boder"
+            android:onClick="DangNhap"
+            android:text="Đăng nhập"
+            android:textColor="@color/pink" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/boder"
+            android:onClick="DangKi"
+            android:text="Đăng kí"
+            android:textColor="@color/pink" />
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -99,32 +118,17 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:orientation="horizontal"
-        android:weightSum="2">
-
-        <Button
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:background="@drawable/face"
-
+        android:layout_gravity="center"
+        android:layout_marginTop="32dp"
+        android:onClick="LoginFB"
             />
 
-        <Button
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="8dp"
-            android:layout_weight="1"
-            android:background="@drawable/boder2"
-            android:onClick="DangKi"
-            android:text="Đăng kí"
-            android:textColor="@color/pink" />
 
-    </LinearLayout>
 
 
 </LinearLayout>

@@ -69,9 +69,7 @@ public class DiscoverFragment extends Fragment {
 
 
         rclIfyouwant.setHasFixedSize(true);
-        for (int i = 0; i < 3; i++) {
-            songList.add(new Song("Yêu ai để không phải khóc", "", "Hương Ly", "", 29));
-        }
+
         rclIfyouwant.setLayoutManager(new LinearLayoutManager(getContext()));
         myfavoriteAdapter = new MyfavoriteAdapter(getContext(), songList, rclIfyouwant);
         rclIfyouwant.setAdapter(myfavoriteAdapter);

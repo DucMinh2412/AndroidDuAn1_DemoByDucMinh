@@ -28,6 +28,7 @@
         android:layout_marginTop="16dp"
         android:text="Yêu Ai Để Không Phải Khóc"
         android:textColor="@color/white"
+        android:id="@+id/tvNameSong"
         android:textSize="16dp"
         android:textStyle="bold" />
 
@@ -37,12 +38,14 @@
         android:layout_gravity="center"
         android:layout_marginTop="8dp"
         android:text="Hương Ly"
+        android:id="@+id/tvNameSingle"
         android:textColor="@color/white"
         android:textSize="13dp" />
 
     <androidx.appcompat.widget.AppCompatSeekBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/Seebar"
         android:layout_marginTop="48dp" />
 
     <LinearLayout
@@ -56,14 +59,16 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:text="0:00"
+            android:id="@+id/tvStart"
             android:textColor="@color/white"
             android:textSize="13dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="260dp"
+            android:id="@+id/tvEnd"
             android:text="0:00"
+            android:layout_marginLeft="250dp"
             android:textColor="@color/white"
             android:textSize="13dp" />
 
@@ -80,30 +85,40 @@
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_weight="1"
+            android:id="@+id/ImgRamdom"
+            android:onClick="ImgRamDom"
             android:src="@drawable/ff" />
 
         <ImageView
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_weight="1"
+            android:id="@+id/ImgPre"
+            android:onClick="ImgPre"
             android:src="@drawable/pre" />
 
         <ImageView
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_weight="1"
-            android:src="@drawable/pause" />
+            android:id="@+id/ImgPause_Play"
+            android:onClick="ImgPause_Play"
+            android:src="@drawable/play" />
 
         <ImageView
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_weight="1"
+            android:id="@+id/ImgNext"
+            android:onClick="ImgNext"
             android:src="@drawable/next" />
 
         <ImageView
             android:layout_width="56dp"
             android:layout_height="56dp"
             android:layout_weight="1"
+            android:id="@+id/ImgRepeat"
+            android:onClick="Imgrepeat"
             android:src="@drawable/repeat" />
 
     </LinearLayout>

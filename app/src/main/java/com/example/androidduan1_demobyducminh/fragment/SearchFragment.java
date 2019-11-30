@@ -37,7 +37,6 @@ public class SearchFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.rclRecycleviewSearch);
         recyclerView.setHasFixedSize(true);
 
-        songList.add(new Song("Yêu ai để không phải khóc", "", "Hương Ly", "", 29));
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         myfavoriteAdapter = new MyfavoriteAdapter(getContext(), songList, recyclerView);
