@@ -43,6 +43,7 @@ public class RegistrationPresenter {
         }
     }
 
+
     public void Cancel() {
         registrationView.Cancel();
     }

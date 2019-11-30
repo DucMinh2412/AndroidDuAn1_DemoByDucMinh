@@ -6,8 +6,6 @@ public interface LoginView {
 
     void setPass();
 
-    void setRememberPass();
-
     void login();
 
     void Registration();

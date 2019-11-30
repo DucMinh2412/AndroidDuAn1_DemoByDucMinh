@@ -1,6 +1,8 @@
 package com.example.androidduan1_demobyducminh.presenter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 import com.example.androidduan1_demobyducminh.dao.UserDAO;
@@ -59,13 +61,28 @@ public class LoginPresenter {
         });
     }
 
-    public void RememberPass() {
-        loginView.setRememberPass();
-    }
 
     public void Registration() {
         loginView.Registration();
     }
 
+    public void isChecked(String username, String pass, CheckBox checkBox, Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("MY_SHARE.f", Context.MODE_PRIVATE);
+        // đưa dữ liệu vào = editor
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        boolean result = checkBox.isChecked();
+        if (!result) {
+            editor.putString("user", username);
+            editor.putString("pass", pass);
+            editor.putBoolean("save", result);
+        } else {
+            editor.putString("user", username);
+            editor.putString("pass", pass);
+            editor.putBoolean("save", result);
+        }
+        // lưu xuống ổ C
+        editor.commit();
+
+    }
 
 }

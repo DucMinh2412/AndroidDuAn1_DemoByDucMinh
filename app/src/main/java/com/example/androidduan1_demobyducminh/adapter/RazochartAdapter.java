@@ -54,6 +54,7 @@ public class RazochartAdapter extends RecyclerView.Adapter<RazoChartHolder> {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, PlayMusicActivity.class);
+                intent.putExtra("LinkAnhBaiHat", top10Razochart.getLinkAnhBaiHat() + "");
                 intent.putExtra("LinkBaiHat", top10Razochart.getLinkBaiHat() + "");
                 intent.putExtra("TenBaiHat", top10Razochart.getTenBaiHat());
                 intent.putExtra("Tencasi", top10Razochart.getTenCasi());

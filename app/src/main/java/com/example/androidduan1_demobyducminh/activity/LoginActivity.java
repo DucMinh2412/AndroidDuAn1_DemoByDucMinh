@@ -25,6 +25,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     public LoginButton LoginFB;
     public CallbackManager callbackManager;
     LoginPresenter userPresenter;
+    String username, password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +36,7 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         chkcheckbox = findViewById(R.id.chksavepass);
         LoginFB = findViewById(R.id.login_button);
         userPresenter = new LoginPresenter(this, this);
-        ShowChecked();
+        showChecked();
     }
 
 
@@ -44,9 +45,9 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     }
 
     public void DangNhap(View view) {
-        userPresenter.RememberPass();
-        String username = edtuser.getText().toString().trim();
-        String password = edtpass.getText().toString().trim();
+        username = edtuser.getText().toString().trim();
+        password = edtpass.getText().toString().trim();
+        userPresenter.isChecked(username, password, chkcheckbox, this);
         userPresenter.Login(username, password);
     }
 
@@ -73,11 +74,6 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         edtpass.setError("Nhập sai password");
     }
 
-    @Override
-    public void setRememberPass() {
-        isCheked();
-    }
-
 
     @Override
     public void login() {
@@ -99,40 +95,22 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
     }
 
-    public void isCheked() {
-        SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARE.f", Context.MODE_PRIVATE);
-        // đưa dữ liệu vào = editor
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        String username = edtuser.getText().toString();
-        String password = edtpass.getText().toString();
-        boolean result = chkcheckbox.isChecked();
-        if (!result) {
-            editor.putString("user", username);
-            editor.putString("pass", password);
-            editor.putBoolean("save", result);
-        } else {
-            editor.putString("user", username);
-            editor.putString("pass", password);
-            editor.putBoolean("save", result);
-        }
-        // lưu xuống ổ C
-        editor.commit();
-    }
-
-    public void ShowChecked() {
+    public void showChecked() {
         SharedPreferences sharedPreferences = getSharedPreferences("MY_SHARE.f", Context.MODE_PRIVATE);
         boolean result = sharedPreferences.getBoolean("save", false);
         if (result) {
-            String user = sharedPreferences.getString("user", null);
+            String username = sharedPreferences.getString("user", null);
             String pass = sharedPreferences.getString("pass", null);
-            edtuser.setText(user);
+            edtuser.setText(username);
             edtpass.setText(pass);
+
         } else {
             String user = sharedPreferences.getString("user", null);
             edtuser.setText(user);
-        }
 
+        }
         chkcheckbox.setChecked(result);
     }
+
 
 }
