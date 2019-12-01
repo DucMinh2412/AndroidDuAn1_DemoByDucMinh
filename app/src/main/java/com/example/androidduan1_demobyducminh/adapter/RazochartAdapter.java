@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -13,17 +15,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.androidduan1_demobyducminh.R;
 import com.example.androidduan1_demobyducminh.activity.PlayMusicActivity;
 import com.example.androidduan1_demobyducminh.dao.MyFavoriteDAO;
+import com.example.androidduan1_demobyducminh.dao.SongDAO;
 import com.example.androidduan1_demobyducminh.holder.RazoChartHolder;
 import com.example.androidduan1_demobyducminh.model.Favorite;
 import com.example.androidduan1_demobyducminh.model.Top10Razochart;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class RazochartAdapter extends RecyclerView.Adapter<RazoChartHolder> {
+public class RazochartAdapter extends RecyclerView.Adapter<RazoChartHolder> implements Filterable {
 
     public Context context;
     public List<Top10Razochart> top10RazochartList;
     public RecyclerView recyclerView;
+    SongDAO songDAO;
 
 
     public RazochartAdapter(Context context, List<Top10Razochart> top10RazochartList, RecyclerView recyclerView) {
@@ -43,6 +48,43 @@ public class RazochartAdapter extends RecyclerView.Adapter<RazoChartHolder> {
         return razoChartHolder;
     }
 
+    private Filter exampleFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Top10Razochart> filteredList = new ArrayList<>();
+
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(songDAO.showTop10());
+            } else {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+
+                for (Top10Razochart item : songDAO.showTop10()) {
+                    if (item.getTenBaiHat().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(item);
+                    }
+                }
+            }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            top10RazochartList.clear();
+            top10RazochartList.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
+
+
+    @Override
+    public int getItemCount() {
+        return top10RazochartList.size();
+    }
+
     @Override
     public void onBindViewHolder(@NonNull final RazoChartHolder holder, int position) {
 
@@ -50,6 +92,7 @@ public class RazochartAdapter extends RecyclerView.Adapter<RazoChartHolder> {
         holder.TenBaiHatTop10.setText(top10Razochart.getTenBaiHat());
         holder.TenCaSiTop10.setText(top10Razochart.getTenCasi());
         holder.ImgAnhCaSi.setImageResource(top10Razochart.getLinkAnhBaiHat());
+        songDAO = new SongDAO(context);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,13 +121,10 @@ public class RazochartAdapter extends RecyclerView.Adapter<RazoChartHolder> {
         });
     }
 
-
     @Override
-    public int getItemCount() {
-        return top10RazochartList.size();
+    public Filter getFilter() {
+        return exampleFilter;
     }
-
-
 }
 
 

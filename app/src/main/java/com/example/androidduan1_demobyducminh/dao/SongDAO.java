@@ -57,7 +57,7 @@ public class SongDAO {
     }
 
     public List<Top10Razochart> showTop10() {
-        List<Top10Razochart> top10SachBanChayList = new ArrayList<>();
+        List<Top10Razochart> top10RazochartList = new ArrayList<>();
 
         SQLiteDatabase sqLiteDatabase = songOpenHelper.getReadableDatabase();
 
@@ -76,14 +76,14 @@ public class SongDAO {
             top10Razochart.setSoluotNghe(cursor.getInt(cursor.getColumnIndex(tc_SOLUOTNGHE)));
             top10Razochart.setLinkAnhBaiHat(cursor.getInt(cursor.getColumnIndex(tc_LINKANHBAIHAT)));
             top10Razochart.setLinkBaiHat(cursor.getInt(cursor.getColumnIndex(tc_LINKBAIHAT)));
-            top10SachBanChayList.add(top10Razochart);
+            top10RazochartList.add(top10Razochart);
             cursor.moveToNext();
         }
         // dong ket noi con tro
         cursor.close();
         // dong ket noi DB
         sqLiteDatabase.close();
-        return top10SachBanChayList;
+        return top10RazochartList;
     }
 
 
@@ -111,22 +111,21 @@ public class SongDAO {
 
         SQLiteDatabase sqLiteDatabase = songOpenHelper.getWritableDatabase();
 
-        String SQL = "SELECT * FROM " + TABLE_NAME_BAIHAT + " WHERE " + tc_TENBAIHAT + " LIKE '%" + text + " %'";
+        String SQL = "SELECT * FROM " + TABLE_NAME_BAIHAT + " WHERE " + tc_TENBAIHAT + " LIKE '%" + text + "%' ";
 
         Cursor cursor = sqLiteDatabase.rawQuery(SQL, null);
 
         if (cursor != null) {
             if (cursor.getCount() > 0) {
-
                 cursor.moveToFirst();
                 while (!cursor.isAfterLast()) {
                     Top10Razochart top10Razochart = new Top10Razochart();
-                    top10Razochart.setIDBaiHat(cursor.getInt(cursor.getColumnIndex(tc_IDBAIHAT)));
                     top10Razochart.setTenBaiHat(cursor.getString(cursor.getColumnIndex(tc_TENBAIHAT)));
                     top10Razochart.setTenCasi(cursor.getString(cursor.getColumnIndex(tc_TENCASI)));
                     top10Razochart.setLinkAnhBaiHat(cursor.getInt(cursor.getColumnIndex(tc_LINKANHBAIHAT)));
                     top10Razochart.setLinkBaiHat(cursor.getInt(cursor.getColumnIndex(tc_LINKBAIHAT)));
                     top10Razochart.setSoluotNghe(cursor.getInt(cursor.getColumnIndex(tc_SOLUOTNGHE)));
+                    words.add(top10Razochart);
                     cursor.moveToNext();
 
                 }

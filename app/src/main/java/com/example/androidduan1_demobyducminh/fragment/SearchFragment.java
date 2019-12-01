@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.SearchView;
@@ -27,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SearchFragment extends Fragment {
-    List<Top10Razochart> top10RazochartList = new ArrayList<>();
+    List<Top10Razochart> top10RazochartList;
     RazochartAdapter razochartAdapter;
     RecyclerView recyclerView;
     SongDAO songDAO;
@@ -40,21 +41,24 @@ public class SearchFragment extends Fragment {
         final ImageView imageExit = view.findViewById(R.id.ImgExitSearch);
         recyclerView = view.findViewById(R.id.rclRecycleviewSearch);
         final SearchView searchView = view.findViewById(R.id.svSearch);
+        songDAO = new SongDAO(getContext());
+        top10RazochartList = new ArrayList<>();
+        top10RazochartList = songDAO.showTop10();
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        razochartAdapter = new RazochartAdapter(getContext(), top10RazochartList, recyclerView);
+        recyclerView.setAdapter(razochartAdapter);
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String s) {
+            public boolean onQueryTextSubmit(String query) {
                 return false;
             }
 
             @Override
-            public boolean onQueryTextChange(String s) {
-                songDAO = new SongDAO(getContext());
-                top10RazochartList = songDAO.searchWord(s);
-                recyclerView.setHasFixedSize(true);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                razochartAdapter = new RazochartAdapter(getContext(), top10RazochartList, recyclerView);
-                recyclerView.setAdapter(razochartAdapter);
-                return true;
+            public boolean onQueryTextChange(String text) {
+                razochartAdapter.getFilter().filter(text);
+                return false;
             }
         });
 
