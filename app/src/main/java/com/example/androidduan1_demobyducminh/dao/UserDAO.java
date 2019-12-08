@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.androidduan1_demobyducminh.model.User;
-import com.example.androidduan1_demobyducminh.sqliteopenhelper.UserOpenHelper;
+import com.example.androidduan1_demobyducminh.sqliteopenhelper.SongOpenHelper;
 
 public class UserDAO {
     public static final String SQL_NEWTABLE_USER = "CREATE TABLE USER (" +
@@ -17,13 +17,13 @@ public class UserDAO {
     public static final String tc_NAMELOGIN = "USERNAME";
     public static final String tc_PASS = "PASS";
     public static final String tc_PHONE = "PHONE";
-    UserOpenHelper userOpenHelper;
+    SongOpenHelper songOpenHelper;
     SQLiteDatabase sqLiteDatabase;
 
 
     public UserDAO(Context context) {
-        userOpenHelper = new UserOpenHelper(context);//tao DB
-        sqLiteDatabase = userOpenHelper.getWritableDatabase();//cho phep ghi
+        songOpenHelper = new SongOpenHelper(context);//tao DB
+        sqLiteDatabase = songOpenHelper.getWritableDatabase();//cho phep ghi
     }
 
     public int InsertUser(User user) {
@@ -53,18 +53,6 @@ public class UserDAO {
         return c.moveToFirst();
     }
 
-    public boolean CheckSDT(User user) {
-        String select = " select " + tc_NAMELOGIN + "," + tc_PHONE
-                + " from " + TABLE_NAME_USER
-                + " where " + tc_NAMELOGIN + "=?" + " and " + tc_PASS + "=?";
-
-        String username = user.getUsername();
-        String Phone = user.getPhone();
-
-        Cursor c = sqLiteDatabase.rawQuery(select, new String[]{username, Phone});
-
-        return c.moveToFirst();
-    }
 
     public int changePasswordUser(User user) {
         ContentValues values = new ContentValues();

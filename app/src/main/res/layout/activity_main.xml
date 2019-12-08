@@ -22,37 +22,36 @@
         android:onClick="RLOpen">
 
         <ImageView
-            android:id="@+id/ImgAnhcasi"
+            android:id="@+id/ImgAnhcasiMain"
             android:layout_width="52dp"
             android:layout_height="52dp"
             android:layout_alignParentLeft="true"
             android:src="@drawable/huongly" />
 
         <TextView
-            android:id="@+id/tvTenBaiHatAlway"
+            android:id="@+id/tvTenBaiHatMain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="4dp"
-            android:layout_toRightOf="@id/ImgAnhcasi"
+            android:layout_toRightOf="@id/ImgAnhcasiMain"
             android:text="Yêu ai để không phải khóc"
             android:textColor="@color/white"
             android:textSize="13dp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tvTencasiAlway"
+            android:id="@+id/tvTencasiMain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvTenBaiHatAlway"
+            android:layout_below="@id/tvTenBaiHatMain"
             android:layout_marginLeft="16dp"
-            android:layout_toRightOf="@id/ImgAnhcasi"
+            android:layout_toRightOf="@id/ImgAnhcasiMain"
             android:text="Hương ly"
             android:textColor="@color/white"
             android:textSize="10dp" />
 
         <ImageView
-            android:id="@+id/ImgFavorite"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_alignParentRight="true"

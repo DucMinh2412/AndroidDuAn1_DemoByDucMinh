@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.ListFollowCategoryActivity"></activity>
+        <activity android:name=".activity.ListFollowCategoryActivity" />
         <activity android:name=".activity.CategoryActivity" />
         <activity android:name=".activity.PlaylistActivity" />
         <activity android:name=".activity.PlayMusicActivity" />
@@ -47,7 +47,6 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

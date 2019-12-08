@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,31 +33,53 @@ public class MyfavoriteFragment extends Fragment {
     List<Favorite> favoriteList = new ArrayList<>();
     MyfavoriteAdapter myfavoriteAdapter;
     MyFavoriteDAO myFavoriteDAO;
+    RecyclerView recyclerView;
+    ImageView imageExit;
+    SearchView searchView;
+    Button Filter;
+    Button PlayAllFavorite;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_myfavorite, container, false);
-        final ImageView imageExit = view.findViewById(R.id.ImgExitMyFavorite);
-        RecyclerView recyclerView = view.findViewById(R.id.rclRecycleviewMyfavorite);
-        recyclerView.setHasFixedSize(true);
+        imageExit = view.findViewById(R.id.ImgExitMyFavorite);
+        recyclerView = view.findViewById(R.id.rclRecycleviewMyfavorite);
+        searchView = view.findViewById(R.id.svMyfavorite);
+        PlayAllFavorite = view.findViewById(R.id.PlayAllFavorite);
         myFavoriteDAO = new MyFavoriteDAO(getContext());
+        setRecycleview();
+        FilterSong();
+        popupmenu();
+        OpenAll();
+        return view;
+    }
+
+    public void setRecycleview() {
+        recyclerView.setHasFixedSize(true);
         favoriteList = myFavoriteDAO.ALLSONGFAVORITE();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         myfavoriteAdapter = new MyfavoriteAdapter(getContext(), favoriteList, recyclerView);
         recyclerView.setAdapter(myfavoriteAdapter);
+    }
 
-        Button PlayAllFavorite = view.findViewById(R.id.PlayAllFavorite);
-
-        PlayAllFavorite.setOnClickListener(new View.OnClickListener() {
+    public void FilterSong() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), PlayMusicActivity.class);
-                startActivity(intent);
+            public boolean onQueryTextSubmit(String query) {
+                myfavoriteAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String text) {
+                return false;
             }
         });
+    }
 
-        // popupmenu
+    public void popupmenu() {
         imageExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,6 +107,15 @@ public class MyfavoriteFragment extends Fragment {
                 popupMenu.show();
             }
         });
-        return view;
+    }
+
+    public void OpenAll() {
+        PlayAllFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), PlayMusicActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }

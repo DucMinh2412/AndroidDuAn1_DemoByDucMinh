@@ -10,7 +10,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="ImgExitMusicPlayGame"
+        android:onClick="ImgExitPlaylist"
         android:src="@drawable/ic_chevron_left_black_24dp" />
 
     <TextView
@@ -18,7 +18,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="-30dp"
-        android:text="Nhạc chơi game"
+        android:id="@+id/tvNamePlaylistIntent"
+        android:text="#RazoChart"
         android:textColor="@color/pink2"
         android:textSize="20dp"
         android:textStyle="bold" />
@@ -35,7 +36,7 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rclPlayListPlayGame"
+        android:id="@+id/rclPlayListIntent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="16dp" />

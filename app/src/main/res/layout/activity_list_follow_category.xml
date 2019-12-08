@@ -19,6 +19,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="-30dp"
         android:text="Bolero"
+        android:id="@+id/tvNameCategoryIntent"
         android:textColor="@color/pink2"
         android:textSize="20dp"
         android:textStyle="bold" />

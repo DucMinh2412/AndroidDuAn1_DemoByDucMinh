@@ -42,13 +42,14 @@ public class PlayListAdapter extends RecyclerView.Adapter<PlaylistHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull PlaylistHolder holder, int position) {
-        Playlist playlist = playlists.get(position);
+        final Playlist playlist = playlists.get(position);
         holder.NamePlaylist.setText(playlist.getNamePlaylist());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, PlaylistActivity.class);
+                intent.putExtra("TenPlayList", playlist.getNamePlaylist());
                 context.startActivity(intent);
             }
         });

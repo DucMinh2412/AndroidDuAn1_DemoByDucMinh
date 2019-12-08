@@ -40,17 +40,18 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull CategoryHolder holder, int position) {
-        Category category = categoryList.get(position);
+        final Category category = categoryList.get(position);
         holder.NameCategory.setText(category.getTenTheLoai());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ListFollowCategoryActivity.class);
+                intent.putExtra("TenCategory", category.getTenTheLoai());
                 context.startActivity(intent);
             }
-        });
 
+        });
     }
 
     @Override

@@ -13,16 +13,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidduan1_demobyducminh.R;
 import com.example.androidduan1_demobyducminh.activity.ExchangePassActivity;
 import com.example.androidduan1_demobyducminh.activity.LoginActivity;
-import com.example.androidduan1_demobyducminh.adapter.MyfavoriteAdapter;
 import com.example.androidduan1_demobyducminh.adapter.PlayListAdapter;
 import com.example.androidduan1_demobyducminh.adapter.ThemeAdapter;
-import com.example.androidduan1_demobyducminh.model.Favorite;
+import com.example.androidduan1_demobyducminh.dao.PlaylistDAO;
+import com.example.androidduan1_demobyducminh.dao.ThemeDAO;
 import com.example.androidduan1_demobyducminh.model.Playlist;
 import com.example.androidduan1_demobyducminh.model.Theme;
 
@@ -32,49 +31,64 @@ import java.util.List;
 public class DiscoverFragment extends Fragment {
     RecyclerView rclPlaylist, rcltheme, rclIfyouwant;
     PlayListAdapter playListAdapter;
-    MyfavoriteAdapter myfavoriteAdapter;
     ThemeAdapter themeAdapter;
-
-    List<Favorite> favoriteList = new ArrayList<>();
     List<Playlist> playlists = new ArrayList<>();
     List<Theme> themeList = new ArrayList<>();
+    PlaylistDAO playlistDAO;
+    ThemeDAO themeDAO;
+    ImageView imageExit;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_discover, container, false);
-        final ImageView imageExit = view.findViewById(R.id.ImgExitDiscover);
+        imageExit = view.findViewById(R.id.ImgExitDiscover);
         rclPlaylist = view.findViewById(R.id.rclPlaylist);
         rcltheme = view.findViewById(R.id.rcltheme);
         rclIfyouwant = view.findViewById(R.id.rclIfyouwant);
+        playlistDAO = new PlaylistDAO(getContext());
+        themeDAO = new ThemeDAO(getContext());
+        //AddPlaylist();
+        //AddTheme();
+        setRclPlaylist();
+        setRcltheme();
+        Exit();
+        return view;
+    }
+
+    public void AddPlaylist() {
+        playlistDAO.InsertPlaylist(new Playlist("#Razochart"));
+        playlistDAO.InsertPlaylist(new Playlist("Nhạc chơi game"));
+        playlistDAO.InsertPlaylist(new Playlist("Nhạc tâm trạng"));
+    }
+
+    public void AddTheme() {
+        themeDAO.InsertTHEME(new Theme("Bolero"));
+        themeDAO.InsertTHEME(new Theme("Trữ Tình"));
+        themeDAO.InsertTHEME(new Theme("Pop-Ballab"));
+    }
+
+    public void setRclPlaylist() {
+        playlists = playlistDAO.ALLPlaylist();
         rclPlaylist.setHasFixedSize(true);
-        playlists.add(new Playlist("#Razochart"));
-        playlists.add(new Playlist("Nhạc chơi game"));
-        playlists.add(new Playlist("Pop-Ballab"));
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3);
         gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
         rclPlaylist.setLayoutManager(gridLayoutManager);
         playListAdapter = new PlayListAdapter(getContext(), playlists, rclPlaylist);
         rclPlaylist.setAdapter(playListAdapter);
+    }
 
+    public void setRcltheme() {
+        themeList = themeDAO.ALLTheme();
         rcltheme.setHasFixedSize(true);
-        themeList.add(new Theme("Bolero"));
-        themeList.add(new Theme("Trữ Tình"));
-        themeList.add(new Theme("Pop-Ballab"));
         GridLayoutManager gridLayoutManager2 = new GridLayoutManager(getContext(), 3);
         gridLayoutManager2.setOrientation(GridLayoutManager.VERTICAL);
         rcltheme.setLayoutManager(gridLayoutManager2);
         themeAdapter = new ThemeAdapter(getContext(), themeList, rcltheme);
         rcltheme.setAdapter(themeAdapter);
+    }
 
-
-        rclIfyouwant.setHasFixedSize(true);
-
-        rclIfyouwant.setLayoutManager(new LinearLayoutManager(getContext()));
-        myfavoriteAdapter = new MyfavoriteAdapter(getContext(), favoriteList, rclIfyouwant);
-        rclIfyouwant.setAdapter(myfavoriteAdapter);
-
-        // popupmenu
+    public void Exit() {
         imageExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -101,6 +115,5 @@ public class DiscoverFragment extends Fragment {
                 popupMenu.show();
             }
         });
-        return view;
     }
 }

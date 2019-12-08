@@ -28,9 +28,13 @@ public class PlayMusicActivity extends AppCompatActivity {
     public MediaPlayer mediaPlayer;
     public ImageView ImgRamDom, ImgNext, ImgPre, ImgPause_Play, ImgRepeat, ImgPLAnhcasi;
     public Handler myHandler = new Handler();
-    public int position = 0;
+    public int position;
     List<Top10Razochart> razochartList = new ArrayList<>();
     SongDAO songDAO;
+    int LinkAnhBaiHat;
+    int LinkBaiHat;
+    String TenBaiHat;
+    String TenCasi;
     boolean repeat = false;
     boolean checkramdom = false;
     private Runnable UpdateSongTime = new Runnable() {
@@ -51,20 +55,15 @@ public class PlayMusicActivity extends AppCompatActivity {
         songDAO = new SongDAO(this);
         razochartList = songDAO.showTop10();
         Intent intent = getIntent();
-        int LinkAnhBaiHat = Integer.parseInt(intent.getStringExtra("LinkAnhBaiHat"));
-        int LinkBaiHat = Integer.parseInt(intent.getStringExtra("LinkBaiHat"));
-        String TenBaiHat = intent.getStringExtra("TenBaiHat");
-        String TenCasi = intent.getStringExtra("Tencasi");
+        LinkAnhBaiHat = Integer.parseInt(intent.getStringExtra("LinkAnhBaiHat"));
+        LinkBaiHat = Integer.parseInt(intent.getStringExtra("LinkBaiHat"));
+        TenBaiHat = intent.getStringExtra("TenBaiHat");
+        TenCasi = intent.getStringExtra("Tencasi");
         tvNameSong.setText(TenBaiHat);
         tvNameSingle.setText(TenCasi);
         ImgPLAnhcasi.setImageResource(LinkAnhBaiHat);
         mediaPlayer = MediaPlayer.create(PlayMusicActivity.this, LinkBaiHat);
-        if (mediaPlayer.isPlaying()) {
-            mediaPlayer.stop();
-            mediaPlayer.release();
-        } else {
-            mediaPlayer.start();
-        }
+        mediaPlayer.start();
         setTime();
         OnSeeBar();
     }
@@ -213,9 +212,15 @@ public class PlayMusicActivity extends AppCompatActivity {
 
 
     public void ImgExitPlayMusic(View view) {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra("TenBaiHatReturn", TenBaiHat);
+        resultIntent.putExtra("TenCasiReturn", TenCasi);
+        resultIntent.putExtra("LinkAnhBaiHatReturn", LinkAnhBaiHat);
+        setResult(RESULT_OK, resultIntent);
         finish();
         Animatoo.animateSlideDown(this);
     }
+
 
     public void ID() {
         tvStart = findViewById(R.id.tvStart);

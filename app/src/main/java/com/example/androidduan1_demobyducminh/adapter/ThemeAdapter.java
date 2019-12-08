@@ -40,15 +40,17 @@ public class ThemeAdapter extends RecyclerView.Adapter<ThemeHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ThemeHolder holder, int position) {
-        Theme theme = themeList.get(position);
+        final Theme theme = themeList.get(position);
         holder.NameTheMe.setText(theme.getNameChuDe());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, CategoryActivity.class);
+                intent.putExtra("TenTheme", theme.getNameChuDe());
                 context.startActivity(intent);
             }
+
         });
     }
 

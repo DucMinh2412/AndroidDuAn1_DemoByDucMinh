@@ -21,20 +21,6 @@
 
     </LinearLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp">
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/pink"
-            android:hint="Số điện thoại"
-            android:inputType="phone" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
@@ -47,6 +33,7 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/pink"
             android:hint="Mật khẩu mới"
+            android:id="@+id/edtNewPass"
             android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -62,6 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/pink"
+            android:id="@+id/edtNewtypePass"
             android:hint="Nhập lại mật khẩu mới"
             android:inputType="textPassword" />
 

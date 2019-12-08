@@ -23,6 +23,7 @@ public class SongDAO {
             + " LinkBaiHat integer,"
             + " LinkAnhBaiHat integer,"
             + " SoLuotNghe integer)";
+
     public static final String TABLE_NAME_BAIHAT = "SONG";
     public static final String tc_IDBAIHAT = "IDBaiHat";
     public static final String tc_IDPLAYLIST = "IDPlaylist";
@@ -43,7 +44,8 @@ public class SongDAO {
 
     public int InsertSONG(Song song) {
         ContentValues values = new ContentValues();
-        // chèn 1 hàng mới
+        values.put(tc_IDPLAYLIST, song.getIDPlaylist() + "");
+        values.put(tc_IDTHELOAI, song.getIDTheLoai() + "");
         values.put(tc_TENBAIHAT, song.getTenBaiHat());
         values.put(tc_TENCASI, song.getTenCasi());
         values.put(tc_LINKBAIHAT, song.getLinkBaiHat() + "");
@@ -55,6 +57,7 @@ public class SongDAO {
         }
         return 1; //insert thanh cong
     }
+
 
     public List<Top10Razochart> showTop10() {
         List<Top10Razochart> top10RazochartList = new ArrayList<>();
@@ -86,54 +89,181 @@ public class SongDAO {
         return top10RazochartList;
     }
 
+    public List<Song> ALLPlaylistRazo() {
+        List<Song> songList = new ArrayList<>();
 
-    public List<Song> ALLSONG() {
-        List<Song> list = new ArrayList<Song>();
-        Cursor cursor = sqLiteDatabase.query(TABLE_NAME_BAIHAT, null, null, null, null, null, null);
+        SQLiteDatabase sqLiteDatabase = songOpenHelper.getReadableDatabase();
+
+        String select2 = "SELECT SONG.IDPlaylist, SONG.TenBaiHat, SONG.TenCaSi, SONG.LinkBaiHat, SONG.LinkAnhBaiHat," + " PLAYLIST.IDPlaylist, PLAYLIST.TenPlaylist"
+                + " FROM " + TABLE_NAME_BAIHAT + " INNER JOIN " + PlaylistDAO.TABLE_NAME_PLAYLIST
+                + " ON SONG.IDPlaylist = PLAYLIST.IDPlaylist "
+                + " WHERE SONG.IDPlaylist = PLAYLIST.IDPlaylist ";
+
+        Cursor cursor = sqLiteDatabase.rawQuery(select2, null);
         cursor.moveToFirst();
         while (cursor.isAfterLast() == false) {
             Song song = new Song();
-            song.setIDBaiHat(cursor.getInt(cursor.getColumnIndex(tc_IDBAIHAT)));
             song.setTenBaiHat(cursor.getString(cursor.getColumnIndex(tc_TENBAIHAT)));
             song.setTenCasi(cursor.getString(cursor.getColumnIndex(tc_TENCASI)));
             song.setLinkAnhBaiHat(cursor.getInt(cursor.getColumnIndex(tc_LINKANHBAIHAT)));
             song.setLinkBaiHat(cursor.getInt(cursor.getColumnIndex(tc_LINKBAIHAT)));
-            song.setSoluotNghe(cursor.getInt(cursor.getColumnIndex(tc_SOLUOTNGHE)));
-            list.add(song);
+            songList.add(song);
             cursor.moveToNext();
         }
+        // dong ket noi con tro
         cursor.close();
-        return list;
+        // dong ket noi DB
+        sqLiteDatabase.close();
+        return songList;
     }
 
-    public List<Top10Razochart> searchWord(String text) {
-        List<Top10Razochart> words = new ArrayList<>();
+    public List<Song> ALLPlaylistPlayGame() {
+        List<Song> songList = new ArrayList<>();
 
-        SQLiteDatabase sqLiteDatabase = songOpenHelper.getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = songOpenHelper.getReadableDatabase();
 
-        String SQL = "SELECT * FROM " + TABLE_NAME_BAIHAT + " WHERE " + tc_TENBAIHAT + " LIKE '%" + text + "%' ";
+        String select2 = "SELECT SONG.IDPlaylist, SONG.TenBaiHat, SONG.TenCaSi, SONG.LinkBaiHat, SONG.LinkAnhBaiHat," + " PLAYLIST.IDPlaylist, PLAYLIST.TenPlaylist"
+                + " FROM " + TABLE_NAME_BAIHAT + " INNER JOIN " + PlaylistDAO.TABLE_NAME_PLAYLIST
+                + " ON SONG.IDPlaylist = PLAYLIST.IDPlaylist "
+                + " WHERE SONG.IDPlaylist = 1";
 
-        Cursor cursor = sqLiteDatabase.rawQuery(SQL, null);
-
-        if (cursor != null) {
-            if (cursor.getCount() > 0) {
-                cursor.moveToFirst();
-                while (!cursor.isAfterLast()) {
-                    Top10Razochart top10Razochart = new Top10Razochart();
-                    top10Razochart.setTenBaiHat(cursor.getString(cursor.getColumnIndex(tc_TENBAIHAT)));
-                    top10Razochart.setTenCasi(cursor.getString(cursor.getColumnIndex(tc_TENCASI)));
-                    top10Razochart.setLinkAnhBaiHat(cursor.getInt(cursor.getColumnIndex(tc_LINKANHBAIHAT)));
-                    top10Razochart.setLinkBaiHat(cursor.getInt(cursor.getColumnIndex(tc_LINKBAIHAT)));
-                    top10Razochart.setSoluotNghe(cursor.getInt(cursor.getColumnIndex(tc_SOLUOTNGHE)));
-                    words.add(top10Razochart);
-                    cursor.moveToNext();
-
-                }
-                cursor.close();
-            }
+        Cursor cursor = sqLiteDatabase.rawQuery(select2, null);
+        cursor.moveToFirst();
+        while (cursor.isAfterLast() == false) {
+            Song song = new Song();
+            song.setTenBaiHat(cursor.getString(cursor.getColumnIndex(tc_TENBAIHAT)));
+            song.setTenCasi(cursor.getString(cursor.getColumnIndex(tc_TENCASI)));
+            song.setLinkAnhBaiHat(cursor.getInt(cursor.getColumnIndex(tc_LINKANHBAIHAT)));
+            song.setLinkBaiHat(cursor.getInt(cursor.getColumnIndex(tc_LINKBAIHAT)));
+            songList.add(song);
+            cursor.moveToNext();
         }
-
-        return words;
+        // dong ket noi con tro
+        cursor.close();
+        // dong ket noi DB
+        sqLiteDatabase.close();
+        return songList;
     }
+
+    public List<Song> ALLPlaylistMood() {
+        List<Song> songList = new ArrayList<>();
+
+        SQLiteDatabase sqLiteDatabase = songOpenHelper.getReadableDatabase();
+
+        String select2 = "SELECT SONG.IDPlaylist, SONG.TenBaiHat, SONG.TenCaSi, SONG.LinkBaiHat, SONG.LinkAnhBaiHat," + " PLAYLIST.IDPlaylist, PLAYLIST.TenPlaylist"
+                + " FROM " + TABLE_NAME_BAIHAT + " INNER JOIN " + PlaylistDAO.TABLE_NAME_PLAYLIST
+                + " ON SONG.IDPlaylist = PLAYLIST.IDPlaylist "
+                + " WHERE SONG.IDPlaylist = 2";
+
+        Cursor cursor = sqLiteDatabase.rawQuery(select2, null);
+        cursor.moveToFirst();
+        while (cursor.isAfterLast() == false) {
+            Song song = new Song();
+            song.setTenBaiHat(cursor.getString(cursor.getColumnIndex(tc_TENBAIHAT)));
+            song.setTenCasi(cursor.getString(cursor.getColumnIndex(tc_TENCASI)));
+            song.setLinkAnhBaiHat(cursor.getInt(cursor.getColumnIndex(tc_LINKANHBAIHAT)));
+            song.setLinkBaiHat(cursor.getInt(cursor.getColumnIndex(tc_LINKBAIHAT)));
+            songList.add(song);
+            cursor.moveToNext();
+        }
+        // dong ket noi con tro
+        cursor.close();
+        // dong ket noi DB
+        sqLiteDatabase.close();
+        return songList;
+    }
+
+
+    public List<Song> ALLPlaylistBolero() {
+        List<Song> songList = new ArrayList<>();
+
+        SQLiteDatabase sqLiteDatabase = songOpenHelper.getReadableDatabase();
+
+        String select2 = "SELECT SONG.IDTheLoai, SONG.TenBaiHat, SONG.TenCaSi, SONG.LinkBaiHat, SONG.LinkAnhBaiHat," + "CATEGORY.IDTheLoai,CATEGORY.TenTheLoai"
+                + " FROM " + TABLE_NAME_BAIHAT + " INNER JOIN " + CategoryDAO.TABLE_NAME_THELOAI
+                + " ON SONG.IDTheLoai =CATEGORY.IDTheLoai "
+                + " WHERE SONG.IDTheLoai = 1";
+
+        Cursor cursor = sqLiteDatabase.rawQuery(select2, null);
+        cursor.moveToFirst();
+        while (cursor.isAfterLast() == false) {
+            Song song = new Song();
+            song.setTenBaiHat(cursor.getString(cursor.getColumnIndex(tc_TENBAIHAT)));
+            song.setTenCasi(cursor.getString(cursor.getColumnIndex(tc_TENCASI)));
+            song.setLinkAnhBaiHat(cursor.getInt(cursor.getColumnIndex(tc_LINKANHBAIHAT)));
+            song.setLinkBaiHat(cursor.getInt(cursor.getColumnIndex(tc_LINKBAIHAT)));
+            songList.add(song);
+            cursor.moveToNext();
+        }
+        // dong ket noi con tro
+        cursor.close();
+        // dong ket noi DB
+        sqLiteDatabase.close();
+        return songList;
+    }
+
+    public List<Song> ALLPlaylistRomantic() {
+        List<Song> songList = new ArrayList<>();
+
+        SQLiteDatabase sqLiteDatabase = songOpenHelper.getReadableDatabase();
+
+        String select2 = "SELECT SONG.IDTheLoai, SONG.TenBaiHat, SONG.TenCaSi, SONG.LinkBaiHat, SONG.LinkAnhBaiHat," + "CATEGORY.IDTheLoai,CATEGORY.TenTheLoai"
+                + " FROM " + TABLE_NAME_BAIHAT + " INNER JOIN " + CategoryDAO.TABLE_NAME_THELOAI
+                + " ON SONG.IDTheLoai =CATEGORY.IDTheLoai "
+                + " WHERE SONG.IDTheLoai = 2";
+
+        Cursor cursor = sqLiteDatabase.rawQuery(select2, null);
+        cursor.moveToFirst();
+        while (cursor.isAfterLast() == false) {
+            Song song = new Song();
+            song.setTenBaiHat(cursor.getString(cursor.getColumnIndex(tc_TENBAIHAT)));
+            song.setTenCasi(cursor.getString(cursor.getColumnIndex(tc_TENCASI)));
+            song.setLinkAnhBaiHat(cursor.getInt(cursor.getColumnIndex(tc_LINKANHBAIHAT)));
+            song.setLinkBaiHat(cursor.getInt(cursor.getColumnIndex(tc_LINKBAIHAT)));
+            songList.add(song);
+            cursor.moveToNext();
+        }
+        // dong ket noi con tro
+        cursor.close();
+        // dong ket noi DB
+        sqLiteDatabase.close();
+        return songList;
+    }
+
+    public List<Song> ALLPlaylistPopBallab() {
+        List<Song> songList = new ArrayList<>();
+
+        SQLiteDatabase sqLiteDatabase = songOpenHelper.getReadableDatabase();
+
+        String select2 = "SELECT SONG.IDTheLoai, SONG.TenBaiHat, SONG.TenCaSi, SONG.LinkBaiHat, SONG.LinkAnhBaiHat," + " PLAYLIST.IDPlaylist, PLAYLIST.TenPlaylist"
+                + " FROM " + TABLE_NAME_BAIHAT + " INNER JOIN " + PlaylistDAO.TABLE_NAME_PLAYLIST
+                + " ON SONG.IDPlaylist = PLAYLIST.IDPlaylist "
+                + " WHERE SONG.IDTheLoai = 3";
+
+        Cursor cursor = sqLiteDatabase.rawQuery(select2, null);
+        cursor.moveToFirst();
+        while (cursor.isAfterLast() == false) {
+            Song song = new Song();
+            song.setTenBaiHat(cursor.getString(cursor.getColumnIndex(tc_TENBAIHAT)));
+            song.setTenCasi(cursor.getString(cursor.getColumnIndex(tc_TENCASI)));
+            song.setLinkAnhBaiHat(cursor.getInt(cursor.getColumnIndex(tc_LINKANHBAIHAT)));
+            song.setLinkBaiHat(cursor.getInt(cursor.getColumnIndex(tc_LINKBAIHAT)));
+            songList.add(song);
+            cursor.moveToNext();
+        }
+        // dong ket noi con tro
+        cursor.close();
+        // dong ket noi DB
+        sqLiteDatabase.close();
+        return songList;
+    }
+
+
+
+
+
+
+
+
 
 }

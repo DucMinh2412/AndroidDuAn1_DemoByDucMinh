@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.SearchView;
@@ -32,23 +31,30 @@ public class SearchFragment extends Fragment {
     RazochartAdapter razochartAdapter;
     RecyclerView recyclerView;
     SongDAO songDAO;
+    ImageView imageExit;
+    SearchView searchView;
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
-        final ImageView imageExit = view.findViewById(R.id.ImgExitSearch);
+        imageExit = view.findViewById(R.id.ImgExitSearch);
         recyclerView = view.findViewById(R.id.rclRecycleviewSearch);
-        final SearchView searchView = view.findViewById(R.id.svSearch);
+        searchView = view.findViewById(R.id.svSearch);
         songDAO = new SongDAO(getContext());
         top10RazochartList = new ArrayList<>();
+        Search();
+        Exit();
+        return view;
+    }
+
+    public void Search() {
         top10RazochartList = songDAO.showTop10();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         razochartAdapter = new RazochartAdapter(getContext(), top10RazochartList, recyclerView);
         recyclerView.setAdapter(razochartAdapter);
-        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -61,9 +67,9 @@ public class SearchFragment extends Fragment {
                 return false;
             }
         });
+    }
 
-
-        // popupmenu
+    public void Exit() {
         imageExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,6 +96,5 @@ public class SearchFragment extends Fragment {
                 popupMenu.show();
             }
         });
-        return view;
     }
 }

@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.androidduan1_demobyducminh.model.Favorite;
-import com.example.androidduan1_demobyducminh.sqliteopenhelper.MyfavoriteOpenHelper;
+import com.example.androidduan1_demobyducminh.sqliteopenhelper.SongOpenHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,19 +19,19 @@ public class MyFavoriteDAO {
             + " LinkBaiHat integer,"
             + " LinkAnhBaiHat integer,"
             + " SoLuotNghe integer)";
-    public static final String TABLE_NAME_BAIHAT = "FAVORITE";
+    public static final String TABLE_NAME_MYFAVORITE = "FAVORITE";
     public static final String tc_IDBAIHAT = "IDBaiHat";
     public static final String tc_TENBAIHAT = "TenBaiHat";
     public static final String tc_TENCASI = "TenCaSi";
     public static final String tc_LINKBAIHAT = "LinkBaiHat";
     public static final String tc_LINKANHBAIHAT = "LinkAnhBaiHat";
-    MyfavoriteOpenHelper myfavoriteOpenHelper;
+    SongOpenHelper songOpenHelper;
     SQLiteDatabase sqLiteDatabase;
 
 
     public MyFavoriteDAO(Context context) {
-        myfavoriteOpenHelper = new MyfavoriteOpenHelper(context);//tao DB
-        sqLiteDatabase = myfavoriteOpenHelper.getWritableDatabase();//cho phep ghi
+        songOpenHelper = new SongOpenHelper(context);//tao DB
+        sqLiteDatabase = songOpenHelper.getWritableDatabase();//cho phep ghi
     }
 
     public int InsertSONGFV(Favorite favorite) {
@@ -41,7 +41,7 @@ public class MyFavoriteDAO {
         values.put(tc_TENCASI, favorite.getTenCasi());
         values.put(tc_LINKBAIHAT, favorite.getLinkBaiHat() + "");
         values.put(tc_LINKANHBAIHAT, favorite.getLinkAnhBaiHat() + "");
-        if (sqLiteDatabase.insert(TABLE_NAME_BAIHAT, null, values) < 0) {
+        if (sqLiteDatabase.insert(TABLE_NAME_MYFAVORITE, null, values) < 0) {
 
             return -1; //insert khong thanh cong
         }
@@ -49,9 +49,10 @@ public class MyFavoriteDAO {
     }
 
 
+
     public List<Favorite> ALLSONGFAVORITE() {
         List<Favorite> list = new ArrayList<Favorite>();
-        Cursor cursor = sqLiteDatabase.query(TABLE_NAME_BAIHAT, null, null, null, null, null, null);
+        Cursor cursor = sqLiteDatabase.query(TABLE_NAME_MYFAVORITE, null, null, null, null, null, null);
         cursor.moveToFirst();
         while (cursor.isAfterLast() == false) {
             Favorite favorite = new Favorite();

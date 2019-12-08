@@ -9,7 +9,9 @@ public class Song {
     public Song() {
     }
 
-    public Song(String tenBaiHat, String tenCasi, int linkAnhBaiHat, int linkBaiHat, double soluotNghe) {
+    public Song(int IDTheLoai, int IDPlaylist, String tenBaiHat, String tenCasi, int linkAnhBaiHat, int linkBaiHat, double soluotNghe) {
+        this.IDTheLoai = IDTheLoai;
+        this.IDPlaylist = IDPlaylist;
         TenBaiHat = tenBaiHat;
         TenCasi = tenCasi;
         LinkAnhBaiHat = linkAnhBaiHat;

@@ -6,10 +6,11 @@
     android:padding="16dp">
 
 
+
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:scrollbars="vertical">
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="fill_parent"

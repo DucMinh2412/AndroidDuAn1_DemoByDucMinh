@@ -1,15 +1,15 @@
 package com.example.androidduan1_demobyducminh.model;
 
 public class Category {
-    public int IDTheLoai;
-    public String TenTheLoai, TenChuDeTM;
+    public int IDTheLoai, IDChuDe;
+    public String TenTheLoai;
 
     public Category() {
     }
 
-    public Category(String tenTheLoai, String tenChuDeTM) {
+    public Category(int IDChuDe, String tenTheLoai) {
+        this.IDChuDe = IDChuDe;
         TenTheLoai = tenTheLoai;
-        TenChuDeTM = tenChuDeTM;
     }
 
     public int getIDTheLoai() {
@@ -20,19 +20,19 @@ public class Category {
         this.IDTheLoai = IDTheLoai;
     }
 
+    public int getIDChuDe() {
+        return IDChuDe;
+    }
+
+    public void setIDChuDe(int IDChuDe) {
+        this.IDChuDe = IDChuDe;
+    }
+
     public String getTenTheLoai() {
         return TenTheLoai;
     }
 
     public void setTenTheLoai(String tenTheLoai) {
         TenTheLoai = tenTheLoai;
-    }
-
-    public String getTenChuDeTM() {
-        return TenChuDeTM;
-    }
-
-    public void setTenChuDeTM(String tenChuDeTM) {
-        TenChuDeTM = tenChuDeTM;
     }
 }
