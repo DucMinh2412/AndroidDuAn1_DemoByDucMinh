@@ -24,9 +24,13 @@ import com.example.androidduan1_demobyducminh.activity.LoginActivity;
 import com.example.androidduan1_demobyducminh.activity.PlayMusicActivity;
 import com.example.androidduan1_demobyducminh.adapter.MyfavoriteAdapter;
 import com.example.androidduan1_demobyducminh.dao.MyFavoriteDAO;
+import com.example.androidduan1_demobyducminh.dao.PlaylistDAO;
 import com.example.androidduan1_demobyducminh.dao.SongDAO;
+import com.example.androidduan1_demobyducminh.dao.ThemeDAO;
 import com.example.androidduan1_demobyducminh.model.Favorite;
+import com.example.androidduan1_demobyducminh.model.Playlist;
 import com.example.androidduan1_demobyducminh.model.Song;
+import com.example.androidduan1_demobyducminh.model.Theme;
 import com.facebook.login.LoginManager;
 
 import java.util.ArrayList;
@@ -35,6 +39,8 @@ import java.util.List;
 public class MyfavoriteFragment extends Fragment {
     List<Favorite> favoriteList = new ArrayList<>();
     List<Song> songList = new ArrayList<>();
+    List<Playlist> playlists = new ArrayList<>();
+    List<Theme> themeList = new ArrayList<>();
     MyfavoriteAdapter myfavoriteAdapter;
     MyFavoriteDAO myFavoriteDAO;
     RecyclerView recyclerView;
@@ -43,6 +49,8 @@ public class MyfavoriteFragment extends Fragment {
     Button PlayAllFavorite;
     int position = 0;
     SongDAO songDAO;
+    PlaylistDAO playlistDAO;
+    ThemeDAO themeDAO;
 
 
 
@@ -55,8 +63,14 @@ public class MyfavoriteFragment extends Fragment {
         searchView = view.findViewById(R.id.svMyfavorite);
         PlayAllFavorite = view.findViewById(R.id.PlayAllFavorite);
         songDAO = new SongDAO(getContext());
+        playlistDAO = new PlaylistDAO(getContext());
+        themeDAO = new ThemeDAO(getContext());
+        playlists = playlistDAO.ALLPlaylist();
+        themeList= themeDAO.ALLTheme();
         songList = songDAO.AllSong();
         Add();
+        AddPlaylist();
+        AddTheme();
         myFavoriteDAO = new MyFavoriteDAO(getContext());
         favoriteList = myFavoriteDAO.ALLSONGFAVORITE();
         setRecycleview();
@@ -148,6 +162,22 @@ public class MyfavoriteFragment extends Fragment {
             songDAO.InsertSONG(new Song(2, 2, "Dừng lại đây thôi", "Hoa Vinh", R.drawable.dunglaidaythoi, R.raw.dunglaidaythoi, 17));
             songDAO.InsertSONG(new Song(3, 1, "Lời yêu ngây dại", "Kha", R.drawable.loiyeungaydai, R.raw.loiyeungaydai, 18));
             songDAO.InsertSONG(new Song(3, 1, "Thay tôi yêu cô ấy", "Thanh Hưng", R.drawable.thaytoiyeucoay, R.raw.thaytoiyeucoay, 19));
+        }
+    }
+
+    public void AddPlaylist() {
+        if(playlists.size()==0) {
+            playlistDAO.InsertPlaylist(new Playlist("#Razochart"));
+            playlistDAO.InsertPlaylist(new Playlist("Nhạc chơi game"));
+            playlistDAO.InsertPlaylist(new Playlist("Nhạc tâm trạng"));
+        }
+    }
+
+    public void AddTheme() {
+        if (themeList.size() == 0) {
+            themeDAO.InsertTHEME(new Theme("Bolero"));
+            themeDAO.InsertTHEME(new Theme("Trữ Tình"));
+            themeDAO.InsertTHEME(new Theme("Pop-Ballab"));
         }
     }
 }

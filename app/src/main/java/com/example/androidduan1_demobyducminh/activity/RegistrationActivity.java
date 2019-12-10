@@ -57,12 +57,12 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
 
     @Override
     public void setRetypePass() {
-        edtDKpass.setError("Chưa nhập lại pass hoặc pass nhập lại không đúng");
+        edtDKretypepass.setError("Chưa nhập lại pass hoặc pass nhập lại không đúng");
     }
 
     @Override
     public void setPhone() {
-        edtDKpass.setError("Chưa nhập phone hoặc phone = 10 số ");
+        edtDKphone.setError("Chưa nhập phone hoặc phone = 10 số ");
     }
 
     @Override

@@ -57,36 +57,15 @@ public class DiscoverFragment extends Fragment {
         playlistDAO = new PlaylistDAO(getContext());
         songDAO = new SongDAO(getContext());
         themeDAO = new ThemeDAO(getContext());
+        playlists = playlistDAO.ALLPlaylist();
+        themeList= themeDAO.ALLTheme();
         setRclPlaylist();
         setRcltheme();
         setRclIfyouwant();
-        AddTheme();
-        AddPlaylist();
         Exit();
         return view;
     }
 
-    public void AddPlaylist() {
-        if(playlists.size()==0) {
-            playlists.add(new Playlist("#Razochart"));
-            playlists.add(new Playlist("Nhạc chơi game"));
-            playlists.add(new Playlist("Nhạc tâm trạng"));
-            playlistDAO.InsertPlaylist(new Playlist("#Razochart"));
-            playlistDAO.InsertPlaylist(new Playlist("Nhạc chơi game"));
-            playlistDAO.InsertPlaylist(new Playlist("Nhạc tâm trạng"));
-        }
-    }
-
-    public void AddTheme() {
-        if (themeList.size() == 0) {
-            themeList.add(new Theme("Bolero"));
-            themeList.add(new Theme("Trữ Tình"));
-            themeList.add(new Theme("Pop-Ballab"));
-            themeDAO.InsertTHEME(new Theme("Bolero"));
-            themeDAO.InsertTHEME(new Theme("Trữ Tình"));
-            themeDAO.InsertTHEME(new Theme("Pop-Ballab"));
-        }
-    }
 
 
     public void setRclPlaylist() {
