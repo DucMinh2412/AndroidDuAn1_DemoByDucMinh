@@ -1,7 +1,9 @@
 package com.example.androidduan1_demobyducminh.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +25,8 @@ public class PlaylistActivity extends AppCompatActivity {
     SongAdapter songAdapter;
     RecyclerView recyclerView;
     TextView tvPlaylistIntent;
+    Button PlayAllPlaylist;
+    int position = 0;
 
 
     @Override
@@ -31,6 +35,7 @@ public class PlaylistActivity extends AppCompatActivity {
         setContentView(R.layout.activity_playlist);
         recyclerView = findViewById(R.id.rclPlayListIntent);
         tvPlaylistIntent = findViewById(R.id.tvNamePlaylistIntent);
+        PlayAllPlaylist = findViewById(R.id.PlayAllPlaylist);
         String NamePlaylist = getIntent().getStringExtra("TenPlayList");
         tvPlaylistIntent.setText(NamePlaylist);
         songDAO = new SongDAO(this);
@@ -48,6 +53,17 @@ public class PlaylistActivity extends AppCompatActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             songAdapter = new SongAdapter(this, songList, recyclerView);
             recyclerView.setAdapter(songAdapter);
+            PlayAllPlaylist.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(PlaylistActivity.this, PlayMusicActivity.class);
+                    intent.putExtra("LinkAnhBaiHat", songList.get(position).getLinkAnhBaiHat()+"");
+                    intent.putExtra("LinkBaiHat",songList.get(position).getLinkBaiHat()+"");
+                    intent.putExtra("TenBaiHat", songList.get(position).getTenBaiHat());
+                    intent.putExtra("Tencasi", songList.get(position).getTenCasi());
+                    startActivity(intent);
+                }
+            });
         }
     }
 
@@ -59,6 +75,17 @@ public class PlaylistActivity extends AppCompatActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             songAdapter = new SongAdapter(this, songList, recyclerView);
             recyclerView.setAdapter(songAdapter);
+            PlayAllPlaylist.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(PlaylistActivity.this, PlayMusicActivity.class);
+                    intent.putExtra("LinkAnhBaiHat", songList.get(position).getLinkAnhBaiHat()+"");
+                    intent.putExtra("LinkBaiHat",songList.get(position).getLinkBaiHat()+"");
+                    intent.putExtra("TenBaiHat", songList.get(position).getTenBaiHat());
+                    intent.putExtra("Tencasi", songList.get(position).getTenCasi());
+                    startActivity(intent);
+                }
+            });
         }
     }
 
@@ -70,6 +97,17 @@ public class PlaylistActivity extends AppCompatActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             songAdapter = new SongAdapter(this, songList, recyclerView);
             recyclerView.setAdapter(songAdapter);
+            PlayAllPlaylist.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(PlaylistActivity.this, PlayMusicActivity.class);
+                    intent.putExtra("LinkAnhBaiHat", songList.get(position).getLinkAnhBaiHat()+"");
+                    intent.putExtra("LinkBaiHat",songList.get(position).getLinkBaiHat()+"");
+                    intent.putExtra("TenBaiHat", songList.get(position).getTenBaiHat());
+                    intent.putExtra("Tencasi", songList.get(position).getTenCasi());
+                    startActivity(intent);
+                }
+            });
         }
     }
 

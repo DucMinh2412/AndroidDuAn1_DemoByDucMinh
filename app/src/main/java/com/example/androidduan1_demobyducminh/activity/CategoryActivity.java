@@ -31,13 +31,30 @@ public class CategoryActivity extends AppCompatActivity {
         rclCategory = findViewById(R.id.rclCategory);
         NameThemeIntent = findViewById(R.id.tvNameThemeIntent);
         categoryDAO = new CategoryDAO(this);
+        categoryList = categoryDAO.ALLCategory();
         String NameTheme = getIntent().getStringExtra("TenTheme");
         NameThemeIntent.setText(NameTheme);
-        //AddCategory();
+        AddCategory();
         AddCategoryBolero();
         AddCategoryRomantic();
         AddCategoryPopBallab();
     }
+
+    public void AddCategory() {
+        if (categoryList.size() == 0) {
+            categoryDAO.InsertCategory(new Category(1, "Bolero 2019"));
+            categoryDAO.InsertCategory(new Category(1, "Bolero 2018"));
+            categoryDAO.InsertCategory(new Category(1, "Bolero 2017"));
+            categoryDAO.InsertCategory(new Category(2, "Trữ Tình 2019"));
+            categoryDAO.InsertCategory(new Category(2, "Trữ Tình 2018"));
+            categoryDAO.InsertCategory(new Category(2, "Trữ Tình 2017"));
+            categoryDAO.InsertCategory(new Category(3, "Pop-Ballab 2019"));
+            categoryDAO.InsertCategory(new Category(3, "Pop-Ballab 2018"));
+            categoryDAO.InsertCategory(new Category(3, "Pop-Ballab 2017"));
+        }
+    }
+
+
 
     public void AddCategoryBolero() {
         String NameThemee = NameThemeIntent.getText().toString();
@@ -83,15 +100,4 @@ public class CategoryActivity extends AppCompatActivity {
         Animatoo.animateSlideLeft(this);
     }
 
-    public void AddCategory() {
-        categoryDAO.InsertCategory(new Category(1, "Bolero 2019"));
-        categoryDAO.InsertCategory(new Category(1, "Bolero 2018"));
-        categoryDAO.InsertCategory(new Category(1, "Bolero 2017"));
-        categoryDAO.InsertCategory(new Category(2, "Trữ Tình 2019"));
-        categoryDAO.InsertCategory(new Category(2, "Trữ Tình 2018"));
-        categoryDAO.InsertCategory(new Category(2, "Trữ Tình 2017"));
-        categoryDAO.InsertCategory(new Category(3, "Pop-Ballab 2019"));
-        categoryDAO.InsertCategory(new Category(3, "Pop-Ballab 2018"));
-        categoryDAO.InsertCategory(new Category(3, "Pop-Ballab 2017"));
-    }
 }

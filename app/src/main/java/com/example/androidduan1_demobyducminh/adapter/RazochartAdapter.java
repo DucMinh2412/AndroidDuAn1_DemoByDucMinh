@@ -49,6 +49,58 @@ public class RazochartAdapter extends RecyclerView.Adapter<RazoChartHolder> impl
         return razoChartHolder;
     }
 
+
+    @Override
+    public void onBindViewHolder(@NonNull final RazoChartHolder holder, final int position) {
+
+        final Top10Razochart top10Razochart = top10RazochartList.get(position);
+        holder.TenBaiHatTop10.setText(top10Razochart.getTenBaiHat());
+        holder.TenCaSiTop10.setText(top10Razochart.getTenCasi());
+        holder.ImgAnhCaSi.setImageResource(top10Razochart.getLinkAnhBaiHat());
+        songDAO = new SongDAO(context);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    Intent intent = new Intent(context, PlayMusicActivity.class);
+                    intent.putExtra("LinkAnhBaiHat", top10Razochart.getLinkAnhBaiHat() + "");
+                    intent.putExtra("LinkBaiHat", top10Razochart.getLinkBaiHat() + "");
+                    intent.putExtra("TenBaiHat", top10Razochart.getTenBaiHat());
+                    intent.putExtra("Tencasi", top10Razochart.getTenCasi());
+                    context.startActivity(intent);
+                }
+        });
+
+        holder.ImgMyfavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MyFavoriteDAO myFavoriteDAO = new MyFavoriteDAO(context);
+                holder.ImgMyfavorite.setImageResource(R.drawable.ic_favorite_pink_24dp);
+                String TenBaiHatYT = top10Razochart.getTenBaiHat();
+                String TenCaSiYT = top10Razochart.getTenCasi();
+                int LinkAnhBaiHatYT = top10Razochart.getLinkAnhBaiHat();
+                int LinkBaiHatYT = top10Razochart.getLinkBaiHat();
+                if (myFavoriteDAO.InsertSONGFV(new Favorite("" + TenBaiHatYT, "" + TenCaSiYT, LinkAnhBaiHatYT, LinkBaiHatYT)) < 0) {
+                    Toast.makeText(context, "thêm thất bại", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(context, "Đã Lưu vào danh sách yêu thích", Toast.LENGTH_LONG).show();
+
+
+                }
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return top10RazochartList.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return exampleFilter;
+    }
+
     private Filter exampleFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
@@ -79,60 +131,6 @@ public class RazochartAdapter extends RecyclerView.Adapter<RazoChartHolder> impl
             notifyDataSetChanged();
         }
     };
-
-
-    @Override
-    public int getItemCount() {
-        return top10RazochartList.size();
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull final RazoChartHolder holder, int position) {
-
-        final Top10Razochart top10Razochart = top10RazochartList.get(position);
-        holder.TenBaiHatTop10.setText(top10Razochart.getTenBaiHat());
-        holder.TenCaSiTop10.setText(top10Razochart.getTenCasi());
-        holder.ImgAnhCaSi.setImageResource(top10Razochart.getLinkAnhBaiHat());
-        songDAO = new SongDAO(context);
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(context, PlayMusicActivity.class);
-                intent.putExtra("LinkAnhBaiHat", top10Razochart.getLinkAnhBaiHat() + "");
-                intent.putExtra("LinkBaiHat", top10Razochart.getLinkBaiHat() + "");
-                intent.putExtra("TenBaiHat", top10Razochart.getTenBaiHat());
-                intent.putExtra("Tencasi", top10Razochart.getTenCasi());
-                context.startActivity(intent);
-
-            }
-        });
-
-        holder.ImgMyfavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MyFavoriteDAO myFavoriteDAO = new MyFavoriteDAO(context);
-                holder.ImgMyfavorite.setImageResource(R.drawable.ic_favorite_pink_24dp);
-                String TenBaiHatYT = top10Razochart.getTenBaiHat();
-                String TenCaSiYT = top10Razochart.getTenCasi();
-                int LinkAnhBaiHatYT = top10Razochart.getLinkAnhBaiHat();
-                int LinkBaiHatYT = top10Razochart.getLinkBaiHat();
-                if (myFavoriteDAO.InsertSONGFV(new Favorite("" + TenBaiHatYT, "" + TenCaSiYT, LinkAnhBaiHatYT, LinkBaiHatYT)) < 0) {
-                    Toast.makeText(context, "thêm thất bại", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(context, "Đã Lưu vào danh sách yêu thích", Toast.LENGTH_LONG).show();
-
-
-                }
-            }
-        });
-    }
-
-    @Override
-    public Filter getFilter() {
-        return exampleFilter;
-    }
 }
 
 

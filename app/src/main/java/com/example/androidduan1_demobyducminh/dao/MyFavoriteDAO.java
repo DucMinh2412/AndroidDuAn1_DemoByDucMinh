@@ -67,4 +67,10 @@ public class MyFavoriteDAO {
         cursor.close();
         return list;
     }
+
+    public int delete(int IDFavorite) {
+        SQLiteDatabase sqLiteDatabase = songOpenHelper.getWritableDatabase();
+        return sqLiteDatabase.delete(TABLE_NAME_MYFAVORITE, tc_IDBAIHAT + "=?", new String[]{IDFavorite + ""});
+
+    }
 }

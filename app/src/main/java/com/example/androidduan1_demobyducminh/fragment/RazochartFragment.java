@@ -19,9 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.androidduan1_demobyducminh.R;
 import com.example.androidduan1_demobyducminh.activity.ExchangePassActivity;
 import com.example.androidduan1_demobyducminh.activity.LoginActivity;
+import com.example.androidduan1_demobyducminh.activity.PlayMusicActivity;
 import com.example.androidduan1_demobyducminh.adapter.RazochartAdapter;
 import com.example.androidduan1_demobyducminh.dao.SongDAO;
-import com.example.androidduan1_demobyducminh.model.Song;
 import com.example.androidduan1_demobyducminh.model.Top10Razochart;
 
 import java.util.ArrayList;
@@ -34,6 +34,7 @@ public class RazochartFragment extends Fragment {
     ImageView imageExit;
     RecyclerView recyclerView;
     Button PlayAllRazoChart;
+    int position =0;
 
 
     @Nullable
@@ -44,14 +45,15 @@ public class RazochartFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rclRecycleviewrazochart);
         PlayAllRazoChart = view.findViewById(R.id.PlayAllRazoChart);
         songDAO = new SongDAO(getContext());
-        //Add();
+        top10RazochartList = songDAO.showTop10();
         Exit();
         setAdapter();
+        PlayAll();
         return view;
     }
 
+
     public void setAdapter() {
-        top10RazochartList = songDAO.showTop10();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         razochartAdapter = new RazochartAdapter(getContext(), top10RazochartList, recyclerView);
@@ -59,6 +61,17 @@ public class RazochartFragment extends Fragment {
     }
 
     public void PlayAll() {
+        PlayAllRazoChart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), PlayMusicActivity.class);
+                intent.putExtra("LinkAnhBaiHat", top10RazochartList.get(position).getLinkAnhBaiHat()+"");
+                intent.putExtra("LinkBaiHat",top10RazochartList.get(position).getLinkBaiHat()+"");
+                intent.putExtra("TenBaiHat", top10RazochartList.get(position).getTenBaiHat());
+                intent.putExtra("Tencasi", top10RazochartList.get(position).getTenCasi());
+                startActivity(intent);
+            }
+        });
     }
 
     public void Exit() {
@@ -90,18 +103,6 @@ public class RazochartFragment extends Fragment {
         });
     }
 
-    public void Add() {
-        songDAO.InsertSONG(new Song(3, 1, "Anh đi nhé", "Anh Quân", R.drawable.anhdinhe, R.raw.anhdinhe, 10));
-        songDAO.InsertSONG(new Song(3, 1, "Cô thắm không về", "Phát Hồ; Jokes Bii; Thiện", R.drawable.cothamkhongve, R.raw.cothamkhongve, 11));
-        songDAO.InsertSONG(new Song(2, 2, "Nơi mình dừng chân", "Mỹ Tâm", R.drawable.noiminhdungchan, R.raw.noiminhdungchan, 12));
-        songDAO.InsertSONG(new Song(2, 2, "Sau tất cả", "Erik", R.drawable.sautatca, R.raw.sautatca, 13));
-        songDAO.InsertSONG(new Song(1, 2, "Tình lỡ", "Lệ Quyên", R.drawable.tinhlo, R.raw.tinhlo, 14));
-        songDAO.InsertSONG(new Song(2, 2, "Dưới những cơn mưa", "Mr.siro", R.drawable.duoinhungconmua, R.raw.duoinhungconmua, 15));
-        songDAO.InsertSONG(new Song(3, 1, "Em gì ơi", "Jack; K-icm", R.drawable.emgioi, R.raw.emgioi, 16));
-        songDAO.InsertSONG(new Song(2, 2, "Dừng lại đây thôi", "Hoa Vinh", R.drawable.dunglaidaythoi, R.raw.dunglaidaythoi, 17));
-        songDAO.InsertSONG(new Song(3, 1, "Lời yêu ngây dại", "Kha", R.drawable.loiyeungaydai, R.raw.loiyeungaydai, 18));
-        songDAO.InsertSONG(new Song(3, 1, "Thay tôi yêu cô ấy", "Thanh Hưng", R.drawable.thaytoiyeucoay, R.raw.thaytoiyeucoay, 19));
-    }
 
 
 

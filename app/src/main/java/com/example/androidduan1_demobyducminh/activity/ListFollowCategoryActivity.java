@@ -3,6 +3,7 @@ package com.example.androidduan1_demobyducminh.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,8 @@ public class ListFollowCategoryActivity extends AppCompatActivity {
     SongDAO songDAO;
     List<Song> songList = new ArrayList<>();
     SongAdapter songAdapter;
+    Button PlayAllListFolowcategory;
+    int position = 0;
 
 
     @Override
@@ -31,6 +34,7 @@ public class ListFollowCategoryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_follow_category);
         recyclerView = findViewById(R.id.rclListFolowCategory);
         NameCategoryIntent = findViewById(R.id.tvNameCategoryIntent);
+        PlayAllListFolowcategory = findViewById(R.id.PlayAllListFolowcategory);
         String TenCategory = getIntent().getStringExtra("TenCategory");
         NameCategoryIntent.setText(TenCategory);
         songDAO = new SongDAO(this);
@@ -48,6 +52,17 @@ public class ListFollowCategoryActivity extends AppCompatActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             songAdapter = new SongAdapter(this, songList, recyclerView);
             recyclerView.setAdapter(songAdapter);
+            PlayAllListFolowcategory.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(ListFollowCategoryActivity.this, PlayMusicActivity.class);
+                    intent.putExtra("LinkAnhBaiHat", songList.get(position).getLinkAnhBaiHat()+"");
+                    intent.putExtra("LinkBaiHat",songList.get(position).getLinkBaiHat()+"");
+                    intent.putExtra("TenBaiHat", songList.get(position).getTenBaiHat());
+                    intent.putExtra("Tencasi", songList.get(position).getTenCasi());
+                    startActivity(intent);
+                }
+            });
         }
     }
 
@@ -59,6 +74,17 @@ public class ListFollowCategoryActivity extends AppCompatActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             songAdapter = new SongAdapter(this, songList, recyclerView);
             recyclerView.setAdapter(songAdapter);
+            PlayAllListFolowcategory.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(ListFollowCategoryActivity.this, PlayMusicActivity.class);
+                    intent.putExtra("LinkAnhBaiHat", songList.get(position).getLinkAnhBaiHat()+"");
+                    intent.putExtra("LinkBaiHat",songList.get(position).getLinkBaiHat()+"");
+                    intent.putExtra("TenBaiHat", songList.get(position).getTenBaiHat());
+                    intent.putExtra("Tencasi", songList.get(position).getTenCasi());
+                    startActivity(intent);
+                }
+            });
         }
     }
 
@@ -70,13 +96,20 @@ public class ListFollowCategoryActivity extends AppCompatActivity {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             songAdapter = new SongAdapter(this, songList, recyclerView);
             recyclerView.setAdapter(songAdapter);
+            PlayAllListFolowcategory.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(ListFollowCategoryActivity.this, PlayMusicActivity.class);
+                    intent.putExtra("LinkAnhBaiHat", songList.get(position).getLinkAnhBaiHat()+"");
+                    intent.putExtra("LinkBaiHat",songList.get(position).getLinkBaiHat()+"");
+                    intent.putExtra("TenBaiHat", songList.get(position).getTenBaiHat());
+                    intent.putExtra("Tencasi", songList.get(position).getTenCasi());
+                    startActivity(intent);
+                }
+            });
         }
     }
 
-    public void PlayAllListFolowcategory(View view) {
-        Intent intent = new Intent(this, PlayMusicActivity.class);
-        startActivity(intent);
-    }
 
     public void ImgExitListFolowCategory(View view) {
         finish();

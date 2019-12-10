@@ -14,53 +14,6 @@
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_navigation"></FrameLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_above="@id/bottom_navigation"
-        android:background="@drawable/boder3"
-        android:onClick="RLOpen">
-
-        <ImageView
-            android:id="@+id/ImgAnhcasiMain"
-            android:layout_width="52dp"
-            android:layout_height="52dp"
-            android:layout_alignParentLeft="true"
-            android:src="@drawable/huongly" />
-
-        <TextView
-            android:id="@+id/tvTenBaiHatMain"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="4dp"
-            android:layout_toRightOf="@id/ImgAnhcasiMain"
-            android:text="Yêu ai để không phải khóc"
-            android:textColor="@color/white"
-            android:textSize="13dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvTencasiMain"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tvTenBaiHatMain"
-            android:layout_marginLeft="16dp"
-            android:layout_toRightOf="@id/ImgAnhcasiMain"
-            android:text="Hương ly"
-            android:textColor="@color/white"
-            android:textSize="10dp" />
-
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="32dp"
-            android:src="@drawable/pause" />
-
-    </RelativeLayout>
-
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"

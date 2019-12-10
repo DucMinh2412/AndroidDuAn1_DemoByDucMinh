@@ -30,7 +30,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="32dp"
         android:background="@color/black2"
-        android:onClick="PlayAllListFolowcategory"
+        android:id="@+id/PlayAllListFolowcategory"
         android:text="Nghe tất cả"
         android:textColor="@color/white"
         android:textStyle="bold" />

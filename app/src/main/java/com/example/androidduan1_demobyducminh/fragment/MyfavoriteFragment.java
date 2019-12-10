@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,7 +24,9 @@ import com.example.androidduan1_demobyducminh.activity.LoginActivity;
 import com.example.androidduan1_demobyducminh.activity.PlayMusicActivity;
 import com.example.androidduan1_demobyducminh.adapter.MyfavoriteAdapter;
 import com.example.androidduan1_demobyducminh.dao.MyFavoriteDAO;
+import com.example.androidduan1_demobyducminh.dao.SongDAO;
 import com.example.androidduan1_demobyducminh.model.Favorite;
+import com.example.androidduan1_demobyducminh.model.Song;
 import com.facebook.login.LoginManager;
 
 import java.util.ArrayList;
@@ -31,13 +34,16 @@ import java.util.List;
 
 public class MyfavoriteFragment extends Fragment {
     List<Favorite> favoriteList = new ArrayList<>();
+    List<Song> songList = new ArrayList<>();
     MyfavoriteAdapter myfavoriteAdapter;
     MyFavoriteDAO myFavoriteDAO;
     RecyclerView recyclerView;
     ImageView imageExit;
     SearchView searchView;
-    Button Filter;
     Button PlayAllFavorite;
+    int position = 0;
+    SongDAO songDAO;
+
 
 
     @Nullable
@@ -48,7 +54,11 @@ public class MyfavoriteFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rclRecycleviewMyfavorite);
         searchView = view.findViewById(R.id.svMyfavorite);
         PlayAllFavorite = view.findViewById(R.id.PlayAllFavorite);
+        songDAO = new SongDAO(getContext());
+        songList = songDAO.AllSong();
+        Add();
         myFavoriteDAO = new MyFavoriteDAO(getContext());
+        favoriteList = myFavoriteDAO.ALLSONGFAVORITE();
         setRecycleview();
         FilterSong();
         popupmenu();
@@ -58,7 +68,6 @@ public class MyfavoriteFragment extends Fragment {
 
     public void setRecycleview() {
         recyclerView.setHasFixedSize(true);
-        favoriteList = myFavoriteDAO.ALLSONGFAVORITE();
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         myfavoriteAdapter = new MyfavoriteAdapter(getContext(), favoriteList, recyclerView);
         recyclerView.setAdapter(myfavoriteAdapter);
@@ -113,9 +122,32 @@ public class MyfavoriteFragment extends Fragment {
         PlayAllFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getContext(), PlayMusicActivity.class);
-                startActivity(intent);
+                if (favoriteList.size() == 0) {
+                    Toast.makeText(getContext(), "Không có dữ liệu để phát", Toast.LENGTH_LONG).show();
+                } else {
+                    Intent intent = new Intent(getContext(), PlayMusicActivity.class);
+                    intent.putExtra("LinkAnhBaiHat", favoriteList.get(position).getLinkAnhBaiHat() + "");
+                    intent.putExtra("LinkBaiHat", favoriteList.get(position).getLinkBaiHat() + "");
+                    intent.putExtra("TenBaiHat", favoriteList.get(position).getTenBaiHat());
+                    intent.putExtra("Tencasi", favoriteList.get(position).getTenCasi());
+                    startActivity(intent);
+                }
             }
         });
+    }
+
+    public void Add() {
+        if (songList.size() == 0) {
+            songDAO.InsertSONG(new Song(3, 1, "Anh đi nhé", "Anh Quân", R.drawable.anhdinhe, R.raw.anhdinhe, 10));
+            songDAO.InsertSONG(new Song(3, 1, "Cô thắm không về", "Phát Hồ; Jokes Bii; Thiện", R.drawable.cothamkhongve, R.raw.cothamkhongve, 11));
+            songDAO.InsertSONG(new Song(2, 2, "Nơi mình dừng chân", "Mỹ Tâm", R.drawable.noiminhdungchan, R.raw.noiminhdungchan, 12));
+            songDAO.InsertSONG(new Song(2, 2, "Sau tất cả", "Erik", R.drawable.sautatca, R.raw.sautatca, 13));
+            songDAO.InsertSONG(new Song(1, 2, "Tình lỡ", "Lệ Quyên", R.drawable.tinhlo, R.raw.tinhlo, 14));
+            songDAO.InsertSONG(new Song(2, 2, "Dưới những cơn mưa", "Mr.siro", R.drawable.duoinhungconmua, R.raw.duoinhungconmua, 15));
+            songDAO.InsertSONG(new Song(3, 1, "Em gì ơi", "Jack; K-icm", R.drawable.emgioi, R.raw.emgioi, 16));
+            songDAO.InsertSONG(new Song(2, 2, "Dừng lại đây thôi", "Hoa Vinh", R.drawable.dunglaidaythoi, R.raw.dunglaidaythoi, 17));
+            songDAO.InsertSONG(new Song(3, 1, "Lời yêu ngây dại", "Kha", R.drawable.loiyeungaydai, R.raw.loiyeungaydai, 18));
+            songDAO.InsertSONG(new Song(3, 1, "Thay tôi yêu cô ấy", "Thanh Hưng", R.drawable.thaytoiyeucoay, R.raw.thaytoiyeucoay, 19));
+        }
     }
 }

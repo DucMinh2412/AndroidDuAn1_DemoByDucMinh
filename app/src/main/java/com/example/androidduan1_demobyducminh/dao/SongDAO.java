@@ -58,6 +58,26 @@ public class SongDAO {
         return 1; //insert thanh cong
     }
 
+    public List<Song> AllSong() {
+        List<Song> list = new ArrayList<Song>();
+        Cursor cursor = sqLiteDatabase.query(TABLE_NAME_BAIHAT, null, null, null, null, null, null);
+        cursor.moveToFirst();
+        while (cursor.isAfterLast() == false) {
+            Song song = new Song();
+            song.setIDBaiHat(cursor.getInt(cursor.getColumnIndex(tc_IDBAIHAT)));
+            song.setIDPlaylist(cursor.getInt(cursor.getColumnIndex(tc_IDPLAYLIST)));
+            song.setIDTheLoai(cursor.getInt(cursor.getColumnIndex(tc_IDTHELOAI)));
+            song.setTenBaiHat(cursor.getString(cursor.getColumnIndex(tc_TENBAIHAT)));
+            song.setTenCasi(cursor.getString(cursor.getColumnIndex(tc_TENCASI)));
+            song.setLinkAnhBaiHat(cursor.getInt(cursor.getColumnIndex(tc_LINKANHBAIHAT)));
+            song.setLinkBaiHat(cursor.getInt(cursor.getColumnIndex(tc_LINKBAIHAT)));
+            list.add(song);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return list;
+    }
+
 
     public List<Top10Razochart> showTop10() {
         List<Top10Razochart> top10RazochartList = new ArrayList<>();
@@ -69,6 +89,36 @@ public class SongDAO {
                 + " GROUP BY " + tc_TENBAIHAT
                 + " ORDER BY " + tc_SOLUOTNGHE
                 + " DESC LIMIT 10 ";
+
+        Cursor cursor = sqLiteDatabase.rawQuery(select2, null);
+        cursor.moveToFirst();
+        while (cursor.isAfterLast() == false) {
+            Top10Razochart top10Razochart = new Top10Razochart();
+            top10Razochart.setTenBaiHat(cursor.getString(cursor.getColumnIndex(tc_TENBAIHAT)));
+            top10Razochart.setTenCasi(cursor.getString(cursor.getColumnIndex(tc_TENCASI)));
+            top10Razochart.setSoluotNghe(cursor.getInt(cursor.getColumnIndex(tc_SOLUOTNGHE)));
+            top10Razochart.setLinkAnhBaiHat(cursor.getInt(cursor.getColumnIndex(tc_LINKANHBAIHAT)));
+            top10Razochart.setLinkBaiHat(cursor.getInt(cursor.getColumnIndex(tc_LINKBAIHAT)));
+            top10RazochartList.add(top10Razochart);
+            cursor.moveToNext();
+        }
+        // dong ket noi con tro
+        cursor.close();
+        // dong ket noi DB
+        sqLiteDatabase.close();
+        return top10RazochartList;
+    }
+
+    public List<Top10Razochart> showTop2() {
+        List<Top10Razochart> top10RazochartList = new ArrayList<>();
+
+        SQLiteDatabase sqLiteDatabase = songOpenHelper.getReadableDatabase();
+
+        String select2 = "SELECT " + tc_TENBAIHAT + "," + tc_TENCASI + "," + tc_LINKBAIHAT + "," + tc_LINKANHBAIHAT + "," + " SUM(" + tc_SOLUOTNGHE + " )AS " + tc_SOLUOTNGHE
+                + " FROM " + TABLE_NAME_BAIHAT
+                + " GROUP BY " + tc_TENBAIHAT
+                + " ORDER BY " + tc_SOLUOTNGHE
+                + " DESC LIMIT 2";
 
         Cursor cursor = sqLiteDatabase.rawQuery(select2, null);
         cursor.moveToFirst();

@@ -1,6 +1,5 @@
 package com.example.androidduan1_demobyducminh.activity;
 
-import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,7 +24,7 @@ public class PlayMusicActivity extends AppCompatActivity {
     public TextView tvStart, tvEnd, tvNameSingle, tvNameSong;
     public static int onTimeOnly = 0;
     public SeekBar seekBar;
-    public MediaPlayer mediaPlayer;
+    public  MediaPlayer mediaPlayer;
     public ImageView ImgRamDom, ImgNext, ImgPre, ImgPause_Play, ImgRepeat, ImgPLAnhcasi;
     public Handler myHandler = new Handler();
     public int position;
@@ -37,35 +36,35 @@ public class PlayMusicActivity extends AppCompatActivity {
     String TenCasi;
     boolean repeat = false;
     boolean checkramdom = false;
-    private Runnable UpdateSongTime = new Runnable() {
-        @Override
-        public void run() {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
-            tvStart.setText(simpleDateFormat.format(mediaPlayer.getCurrentPosition()));
-            seekBar.setProgress(mediaPlayer.getCurrentPosition());
-            myHandler.postDelayed(this, 100);
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_music);
         ID();
+        LinkAnhBaiHat = Integer.parseInt(getIntent().getStringExtra("LinkAnhBaiHat"));
+        LinkBaiHat = Integer.parseInt(getIntent().getStringExtra("LinkBaiHat"));
+        TenBaiHat = getIntent().getStringExtra("TenBaiHat");
+        TenCasi = getIntent().getStringExtra("Tencasi");
         songDAO = new SongDAO(this);
         razochartList = songDAO.showTop10();
-        Intent intent = getIntent();
-        LinkAnhBaiHat = Integer.parseInt(intent.getStringExtra("LinkAnhBaiHat"));
-        LinkBaiHat = Integer.parseInt(intent.getStringExtra("LinkBaiHat"));
-        TenBaiHat = intent.getStringExtra("TenBaiHat");
-        TenCasi = intent.getStringExtra("Tencasi");
         tvNameSong.setText(TenBaiHat);
         tvNameSingle.setText(TenCasi);
         ImgPLAnhcasi.setImageResource(LinkAnhBaiHat);
-        mediaPlayer = MediaPlayer.create(PlayMusicActivity.this, LinkBaiHat);
-        mediaPlayer.start();
+        Start();
         setTime();
         OnSeeBar();
+    }
+
+    public void Start(){
+            mediaPlayer = MediaPlayer.create(PlayMusicActivity.this, LinkBaiHat);
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+                mediaPlayer.release();
+            } else {
+                mediaPlayer.start();
+            }
+
     }
 
     public void setTime() {
@@ -80,8 +79,17 @@ public class PlayMusicActivity extends AppCompatActivity {
 
         seekBar.setProgress(mediaPlayer.getCurrentPosition());
         myHandler.postDelayed(UpdateSongTime, 100);
-
     }
+
+    private Runnable UpdateSongTime = new Runnable() {
+        @Override
+        public void run() {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
+            tvStart.setText(simpleDateFormat.format(mediaPlayer.getCurrentPosition()));
+            seekBar.setProgress(mediaPlayer.getCurrentPosition());
+            myHandler.postDelayed(this, 100);
+        }
+    };
 
     public void ImgPause_Play(View view) {
         if (mediaPlayer.isPlaying()) {
@@ -116,7 +124,6 @@ public class PlayMusicActivity extends AppCompatActivity {
             }
             position = index;
         }
-
         CreateMediaPlayer();
         mediaPlayer.start();
         ImgPause_Play.setImageResource(R.drawable.play);
@@ -134,7 +141,6 @@ public class PlayMusicActivity extends AppCompatActivity {
 
         if (repeat == true) {
             position = position - 1;
-
         }
 
         if (checkramdom == true) {
@@ -212,11 +218,6 @@ public class PlayMusicActivity extends AppCompatActivity {
 
 
     public void ImgExitPlayMusic(View view) {
-        Intent resultIntent = new Intent();
-        resultIntent.putExtra("TenBaiHatReturn", TenBaiHat);
-        resultIntent.putExtra("TenCasiReturn", TenCasi);
-        resultIntent.putExtra("LinkAnhBaiHatReturn", LinkAnhBaiHat);
-        setResult(RESULT_OK, resultIntent);
         finish();
         Animatoo.animateSlideDown(this);
     }

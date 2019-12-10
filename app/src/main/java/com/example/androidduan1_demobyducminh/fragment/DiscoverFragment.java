@@ -13,17 +13,21 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidduan1_demobyducminh.R;
 import com.example.androidduan1_demobyducminh.activity.ExchangePassActivity;
 import com.example.androidduan1_demobyducminh.activity.LoginActivity;
 import com.example.androidduan1_demobyducminh.adapter.PlayListAdapter;
+import com.example.androidduan1_demobyducminh.adapter.RazochartAdapter;
 import com.example.androidduan1_demobyducminh.adapter.ThemeAdapter;
 import com.example.androidduan1_demobyducminh.dao.PlaylistDAO;
+import com.example.androidduan1_demobyducminh.dao.SongDAO;
 import com.example.androidduan1_demobyducminh.dao.ThemeDAO;
 import com.example.androidduan1_demobyducminh.model.Playlist;
 import com.example.androidduan1_demobyducminh.model.Theme;
+import com.example.androidduan1_demobyducminh.model.Top10Razochart;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,11 +36,15 @@ public class DiscoverFragment extends Fragment {
     RecyclerView rclPlaylist, rcltheme, rclIfyouwant;
     PlayListAdapter playListAdapter;
     ThemeAdapter themeAdapter;
+    RazochartAdapter razochartAdapter;
     List<Playlist> playlists = new ArrayList<>();
     List<Theme> themeList = new ArrayList<>();
+    List<Top10Razochart> top10RazochartList = new ArrayList<>();
     PlaylistDAO playlistDAO;
     ThemeDAO themeDAO;
     ImageView imageExit;
+    SongDAO songDAO;
+
 
     @Nullable
     @Override
@@ -47,26 +55,39 @@ public class DiscoverFragment extends Fragment {
         rcltheme = view.findViewById(R.id.rcltheme);
         rclIfyouwant = view.findViewById(R.id.rclIfyouwant);
         playlistDAO = new PlaylistDAO(getContext());
+        songDAO = new SongDAO(getContext());
         themeDAO = new ThemeDAO(getContext());
-        //AddPlaylist();
-        //AddTheme();
         setRclPlaylist();
         setRcltheme();
+        setRclIfyouwant();
+        AddTheme();
+        AddPlaylist();
         Exit();
         return view;
     }
 
     public void AddPlaylist() {
-        playlistDAO.InsertPlaylist(new Playlist("#Razochart"));
-        playlistDAO.InsertPlaylist(new Playlist("Nhạc chơi game"));
-        playlistDAO.InsertPlaylist(new Playlist("Nhạc tâm trạng"));
+        if(playlists.size()==0) {
+            playlists.add(new Playlist("#Razochart"));
+            playlists.add(new Playlist("Nhạc chơi game"));
+            playlists.add(new Playlist("Nhạc tâm trạng"));
+            playlistDAO.InsertPlaylist(new Playlist("#Razochart"));
+            playlistDAO.InsertPlaylist(new Playlist("Nhạc chơi game"));
+            playlistDAO.InsertPlaylist(new Playlist("Nhạc tâm trạng"));
+        }
     }
 
     public void AddTheme() {
-        themeDAO.InsertTHEME(new Theme("Bolero"));
-        themeDAO.InsertTHEME(new Theme("Trữ Tình"));
-        themeDAO.InsertTHEME(new Theme("Pop-Ballab"));
+        if (themeList.size() == 0) {
+            themeList.add(new Theme("Bolero"));
+            themeList.add(new Theme("Trữ Tình"));
+            themeList.add(new Theme("Pop-Ballab"));
+            themeDAO.InsertTHEME(new Theme("Bolero"));
+            themeDAO.InsertTHEME(new Theme("Trữ Tình"));
+            themeDAO.InsertTHEME(new Theme("Pop-Ballab"));
+        }
     }
+
 
     public void setRclPlaylist() {
         playlists = playlistDAO.ALLPlaylist();
@@ -87,6 +108,15 @@ public class DiscoverFragment extends Fragment {
         themeAdapter = new ThemeAdapter(getContext(), themeList, rcltheme);
         rcltheme.setAdapter(themeAdapter);
     }
+
+    public void setRclIfyouwant(){
+        top10RazochartList = songDAO.showTop2();
+        rclIfyouwant.setHasFixedSize(true);
+        rclIfyouwant.setLayoutManager(new LinearLayoutManager(getContext()));
+        razochartAdapter = new RazochartAdapter(getContext(), top10RazochartList, rclIfyouwant);
+        rclIfyouwant.setAdapter(razochartAdapter);
+    }
+
 
     public void Exit() {
         imageExit.setOnClickListener(new View.OnClickListener() {

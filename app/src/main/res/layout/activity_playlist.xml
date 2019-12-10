@@ -31,6 +31,7 @@
         android:layout_marginTop="32dp"
         android:background="@color/black2"
         android:text="Nghe tất cả"
+        android:id="@+id/PlayAllPlaylist"
         android:textColor="@color/white"
         android:textStyle="bold" />
 

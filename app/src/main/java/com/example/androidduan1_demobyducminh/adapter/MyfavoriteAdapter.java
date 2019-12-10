@@ -1,6 +1,8 @@
 package com.example.androidduan1_demobyducminh.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,12 +85,11 @@ public class MyfavoriteAdapter extends RecyclerView.Adapter<MyfavoriteHolder> im
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyfavoriteHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final MyfavoriteHolder holder, final int position) {
         final Favorite favorite = favoriteList.get(position);
         holder.tvTenbaihatYT.setText(favorite.getTenBaiHat());
         holder.tvTencasiYT.setText(favorite.getTenCasi());
         holder.ImgAnhcasi.setImageResource(favorite.getLinkAnhBaiHat());
-        myFavoriteDAO = new MyFavoriteDAO(context);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +100,36 @@ public class MyfavoriteAdapter extends RecyclerView.Adapter<MyfavoriteHolder> im
                 intent.putExtra("TenBaiHat", favorite.getTenBaiHat());
                 intent.putExtra("Tencasi", favorite.getTenCasi());
                 context.startActivity(intent);
+            }
+        });
+
+        holder.ImgFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("Xóa bài hát khỏi danh sách yêu thích ?");
+                builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        myFavoriteDAO = new MyFavoriteDAO(context);
+                        holder.ImgFavorite.setImageResource(R.drawable.ic_favorite_black_24dp);
+                        myFavoriteDAO.delete(favorite.getIDFavorite());
+                        favoriteList.remove(position);
+                        recyclerView.removeViewAt(position);
+                        notifyItemRemoved(position);
+                        notifyItemRangeChanged(position, favoriteList.size());
+                        notifyDataSetChanged();
+                    }
+                });
+
+                builder.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.create();
+                builder.show();
             }
         });
 
