@@ -22,7 +22,6 @@ import java.util.Random;
 
 public class PlayMusicActivity extends AppCompatActivity {
     public TextView tvStart, tvEnd, tvNameSingle, tvNameSong;
-    public static int onTimeOnly = 0;
     public SeekBar seekBar;
     public  MediaPlayer mediaPlayer;
     public ImageView ImgRamDom, ImgNext, ImgPre, ImgPause_Play, ImgRepeat, ImgPLAnhcasi;
@@ -52,9 +51,10 @@ public class PlayMusicActivity extends AppCompatActivity {
         tvNameSingle.setText(TenCasi);
         ImgPLAnhcasi.setImageResource(LinkAnhBaiHat);
         Start();
-        setTime();
         OnSeeBar();
     }
+
+
 
     public void Start(){
             mediaPlayer = MediaPlayer.create(PlayMusicActivity.this, LinkBaiHat);
@@ -63,33 +63,48 @@ public class PlayMusicActivity extends AppCompatActivity {
                 mediaPlayer.release();
             } else {
                 mediaPlayer.start();
+                setTime();
+                UpdateTimeSong();
             }
-
     }
 
     public void setTime() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
-        if (onTimeOnly == 0) {
-            seekBar.setMax(mediaPlayer.getDuration());
-        }
-
         tvEnd.setText(simpleDateFormat.format(mediaPlayer.getDuration()));
-
-        tvStart.setText(simpleDateFormat.format(mediaPlayer.getCurrentPosition()));
-
-        seekBar.setProgress(mediaPlayer.getCurrentPosition());
-        myHandler.postDelayed(UpdateSongTime, 100);
+        seekBar.setMax(mediaPlayer.getDuration());
+       // tvStart.setText(simpleDateFormat.format(mediaPlayer.getCurrentPosition()));
+       // seekBar.setProgress(mediaPlayer.getCurrentPosition());
     }
 
-    private Runnable UpdateSongTime = new Runnable() {
-        @Override
-        public void run() {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
-            tvStart.setText(simpleDateFormat.format(mediaPlayer.getCurrentPosition()));
-            seekBar.setProgress(mediaPlayer.getCurrentPosition());
-            myHandler.postDelayed(this, 100);
-        }
-    };
+   private void UpdateTimeSong(){
+                 final Handler handler = new Handler();
+                 handler.postDelayed(new Runnable() {
+                     @Override
+                     public void run() {
+                         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
+                         tvStart.setText(simpleDateFormat.format(mediaPlayer.getCurrentPosition()));
+                         seekBar.setProgress(mediaPlayer.getCurrentPosition());
+                         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                             @Override
+                             public void onCompletion(MediaPlayer mp) {
+                                 position++;
+                                 if (position > razochartList.size() - 1) {
+                                     position = 0;
+                                 }
+                                 if (mediaPlayer.isPlaying()) {
+                                     mediaPlayer.stop();
+                                     mediaPlayer.release();
+                                 }
+                                 CreateMediaPlayer();
+                                 mediaPlayer.start();
+                                 setTime();
+                                 UpdateTimeSong();
+                             }
+                         });
+                         handler.postDelayed(this,500);
+                     }
+                 },100);
+   }
 
     public void ImgPause_Play(View view) {
         if (mediaPlayer.isPlaying()) {
@@ -97,6 +112,8 @@ public class PlayMusicActivity extends AppCompatActivity {
             ImgPause_Play.setImageResource(R.drawable.pause);
         } else {
             mediaPlayer.start();
+            setTime();
+            UpdateTimeSong();
             ImgPause_Play.setImageResource(R.drawable.play);
         }
     }
@@ -126,6 +143,8 @@ public class PlayMusicActivity extends AppCompatActivity {
         }
         CreateMediaPlayer();
         mediaPlayer.start();
+        setTime();
+        UpdateTimeSong();
         ImgPause_Play.setImageResource(R.drawable.play);
     }
 
@@ -154,6 +173,8 @@ public class PlayMusicActivity extends AppCompatActivity {
 
         CreateMediaPlayer();
         mediaPlayer.start();
+        setTime();
+        UpdateTimeSong();
         ImgPause_Play.setImageResource(R.drawable.play);
     }
 
